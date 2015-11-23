@@ -66,16 +66,14 @@
     tagedit
 
     ;; git integration
-    ;; magit
+    magit
 
     ;; Helm
     helm
 
-    ;; Markdown mode
-    markdown-mode
-
     ;; Slime
-    slime))
+    slime
+    ))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
