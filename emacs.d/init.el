@@ -66,7 +66,7 @@
     tagedit
 
     ;; git integration
-    magit
+    ;; magit
 
     ;; Helm
     helm
