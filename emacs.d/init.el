@@ -72,7 +72,10 @@
     helm
 
     ;; Markdown mode
-    markdown-mode))
+    markdown-mode
+
+    ;; Slime
+    slime))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -137,6 +140,7 @@
 (load "setup-clojure.el")
 (load "setup-js.el")
 (load "setup-c.el")
+(load "setup-clisp.el")
 
 (load "helm-bindings.el")
 (load "org-mode-bindings.el")
