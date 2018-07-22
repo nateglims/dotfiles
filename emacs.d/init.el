@@ -73,7 +73,11 @@
 
     ;; Slime
     slime
-    ))
+
+    ;; Markdown mode
+    markdown-mode
+
+    which-key))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -142,3 +146,18 @@
 
 (load "helm-bindings.el")
 (load "org-mode-bindings.el")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
+ '(package-selected-packages
+   (quote
+    (tagedit smex rainbow-delimiters projectile paredit markdown-mode magit ido-ubiquitous helm exec-path-from-shell clojure-mode-extra-font-locking cider))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

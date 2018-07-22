@@ -68,3 +68,4 @@
 
 (setq electric-indent-mode nil)
 
+(add-hook 'prog-mode-hook 'which-key-mode)

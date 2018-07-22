@@ -11,3 +11,5 @@
     (local-set-key "\C-\M-j" 'org-insert-todo-heading)
     (local-set-key "\C-j" 'org-insert-heading)))
 
+(setq org-capture-templates
+      '(("s" "School" entry (file+headline "~/.capture/school.org" "School Notes" "* %?\n %i\n %a"))))
