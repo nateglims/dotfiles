@@ -15,3 +15,6 @@ if command -v tmux > /dev/null; then
     [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux
 fi
 
+if [ -d /opt/ccl ]; then
+    export CCL_DEFAULT_DIRECTORY="/opt/ccl"
+fi
