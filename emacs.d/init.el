@@ -1,160 +1,165 @@
-;;;;
-;; Packages
-;;;;
-
-;; Define package repositories
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-;;                          ("marmalade" . "http://marmalade-repo.org/packages/")
-;;                          ("melpa" . "http://melpa-stable.milkbox.net/packages/")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/"))
 
-
-;; Load and activate emacs packages. Do this first so that the
-;; packages are loaded before you start trying to modify them.
-;; This also sets the load path.
 (package-initialize)
 
-;; Download the ELPA archive description if needed.
-;; This informs Emacs about the latest versions of all packages, and
-;; makes them available for download.
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-;; The packages you want installed. You can also install these
-;; manually with M-x package-install
-;; Add in your own as you wish:
-(defvar my-packages
-  '(;; makes handling lisp expressions much, much easier
-    ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
-    paredit
-
-    ;; key bindings and code colorization for Clojure
-    ;; https://github.com/clojure-emacs/clojure-mode
-    clojure-mode
-
-    ;; extra syntax highlighting for clojure
-    clojure-mode-extra-font-locking
-
-    ;; integration with a Clojure REPL
-    ;; https://github.com/clojure-emacs/cider
-    cider
-
-    ;; allow ido usage in as many contexts as possible. see
-    ;; customizations/navigation.el line 23 for a description
-    ;; of ido
-    ido-ubiquitous
-
-    ;; Enhances M-x to allow easier execution of commands. Provides
-    ;; a filterable list of possible commands in the minibuffer
-    ;; http://www.emacswiki.org/emacs/Smex
-    smex
-
-    ;; project navigation
-    projectile
-
-    ;; colorful parenthesis matching
-    rainbow-delimiters
-
-    ;; edit html tags like sexps
-    tagedit
-
-    ;; git integration
-    magit
-
-    ;; Helm
-    helm
-
-    ;; Slime
-    slime
-
-    ;; Markdown mode
-    markdown-mode
-
-    which-key))
-
-;; On OS X, an Emacs instance started from the graphical user
-;; interface will have a different environment than a shell in a
-;; terminal window, because OS X does not run a shell during the
-;; login. Obviously this will lead to unexpected results when
-;; calling external utilities like make from Emacs.
-;; This library works around this problem by copying important
-;; environment variables from the user's shell.
-;; https://github.com/purcell/exec-path-from-shell
-(if (eq system-type 'darwin)
-    (add-to-list 'my-packages 'exec-path-from-shell))
-
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 
-;; Place downloaded elisp files in ~/.emacs.d/vendor. You'll then be able
-;; to load them.
-;;
-;; For example, if you download yaml-mode.el to ~/.emacs.d/vendor,
-;; then you can add the following code to this file:
-;;
-;; (require 'yaml-mode)
-;; (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-;; 
-;; Adding this code will make Emacs enter yaml mode whenever you open
-;; a .yml file
-(add-to-list 'load-path "~/.emacs.d/vendor")
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
+;; UI stuff
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+(when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
+  (menu-bar-mode -1))
+
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message t)  
+
+(global-linum-mode t)
+
+(ido-mode)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
+(setq ido-use-filename-at-point nil)
+(show-paren-mode 1)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq ring-bell-function 'ignore)
+
+(blink-cursor-mode 0)
+
+(setq create-lockfiles nil)
+
+(setq-default frame-title-format "%b (%f)")
+;;; Font
+
+(set-face-attribute 'default nil :height 140)
+
+;;; Clipboard
+
+(setq
+  x-select-enable-clipboard t
+  x-select-enable-primary t)
+
+(setq
+  save-interprogram-paste-before-kill t
+  apropos-do-all t
+  mouse-yank-at-point t)
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+;; Formerly Navigation
+
+(use-package uniquify
+  :defer t
+  :config
+  (setq uniquify-buffer-name-style 'forward))
+
+(use-package recentf
+  :config
+  (setq recentf-save-file (concat user-emacs-directory ".recentf"))
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 40))
+
+;; MacOS Specific
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)
+    (exec-path-from-shell-copy-envs '("PATH"))))
+
+  ;; The theme
+
+(use-package zenburn-theme)
+
+;; General Packages
+
+(use-package helm
+  :bind (("M-x" . helm-M-x)
+	 ("C-x C-f" . helm-find-files)))
+
+(use-package smex
+  :config
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex))
 
 
-;;;;
-;; Customization
-;;;;
+(use-package projectile
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (projectile-mode +1))
 
-;; Add a directory to our load path so that when you `load` things
-;; below, Emacs knows where to look for the corresponding file.
-(add-to-list 'load-path "~/.emacs.d/customizations")
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode +1))
 
-;; Sets up exec-path-from-shell so that Emacs will use the correct
-;; environment variables
-(load "shell-integration.el")
+(use-package company
+  :config
+  (global-company-mode))
 
-;; These customizations make it easier for you to navigate files,
-;; switch buffers, and choose options from the minibuffer.
-(load "navigation.el")
+;; Lisps
+(use-package paredit
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  (add-hook 'ielm-mode-hook #'paredit-mode)
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
 
-;; These customizations change the way emacs looks and disable/enable
-;; some user interface elements
-(load "ui.el")
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
-;; These customizations make editing a bit nicer.
-(load "editing.el")
+(use-package slime
+  :config
+  (setq inferior-lisp-program "sbcl")
+  (setq slime-contribs '(slime-fancy))
+  (add-hook 'slime-mode-hook 'start-slime))
 
-;; Hard-to-categorize customizations
-(load "misc.el")
+;;; Clojure
 
-;; For editing lisps
-(load "elisp-editing.el")
+(use-package clojure-mode
+  :config
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook 'subword-mode))
 
-;; Langauage-specific
-(load "setup-clojure.el")
-(load "setup-js.el")
-(load "setup-c.el")
-(load "setup-clisp.el")
+(use-package clojure-mode-extra-font-locking)
 
-(load "helm-bindings.el")
-(load "org-mode-bindings.el")
+(use-package clj-refactor)
+
+(use-package cider
+  :config
+  (add-hook 'cider-mode-hook 'eldoc-mode)
+  (setq cider-repl-pop-to-buffer-on-connect t)
+  (setq cider-show-error-buffer t)
+  (setq cider-auto-select-error-buffer t)
+  (add-hook 'cider-repl-mode-hook 'paredit-mode))
+
+;;; Shell
+(setq-default sh-basic-offset 2)
+(setq-default sh-indentation 2)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(coffee-tab-width 2)
  '(package-selected-packages
    (quote
-    (tagedit smex rainbow-delimiters projectile paredit markdown-mode magit ido-ubiquitous helm exec-path-from-shell clojure-mode-extra-font-locking cider))))
+    (clj-refactor clojure-mode-extra-font-locking clojure-mode smex uniquify exec-path-from-shell slime company projectile paredit helm zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

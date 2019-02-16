@@ -11,9 +11,9 @@ if [ -d /home/nathan/.pyenv/bin ]; then
 	eval "$(pyenv virtualenv-init -)"
 fi
 
-if command -v tmux > /dev/null; then
-    [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux
-fi
+#if command -v tmux > /dev/null; then
+#    [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux
+#fi
 
 if [ -d /opt/ccl ]; then
     export CCL_DEFAULT_DIRECTORY="/opt/ccl"
