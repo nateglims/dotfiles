@@ -62,7 +62,7 @@
 ;; Formerly Navigation
 
 (use-package uniquify
-  :defer t
+  :ensure nil
   :config
   (setq uniquify-buffer-name-style 'forward))
 
@@ -80,7 +80,7 @@
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("PATH"))))
 
-  ;; The theme
+;; The theme
 
 (use-package zenburn-theme)
 
@@ -99,6 +99,7 @@
 (use-package projectile
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
 (use-package which-key
@@ -109,6 +110,10 @@
 (use-package company
   :config
   (global-company-mode))
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
 
 ;; Lisps
 (use-package paredit

@@ -1,4 +1,5 @@
 .smex-items
+smex-items
 *~$
 *~
 places
@@ -12,3 +13,4 @@ backups
 elpa/
 eshell/
 bookmarks
+
