@@ -13,6 +13,8 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+(setq backup-directory-alist `(("." . "~/.backups")))
+
 ;; UI stuff
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
@@ -43,6 +45,10 @@
 (setq create-lockfiles nil)
 
 (setq-default frame-title-format "%b (%f)")
+
+(use-package undo-tree)
+(use-package evil
+  :after (undo-tree))
 ;;; Font
 
 (set-face-attribute 'default nil :height 140)
@@ -82,7 +88,8 @@
 
 ;; The theme
 
-(use-package zenburn-theme)
+;;(use-package zenburn-theme)
+(use-package gruvbox-theme)
 
 ;; General Packages
 
@@ -181,14 +188,80 @@
 (use-package toml-mode
   :mode "/\\(Cargo.lock\\|\\.cargo/config\\)\\'")
 
+
+;;; C
+(use-package clang-format)
+
+(use-package disaster)
+
+(use-package cmake-mode)
+
+(use-package company-c-headers
+  :config
+  (add-to-list 'company-backends 'company-c-headers))
+
+(setq c-default-style "bsd"
+      c-basic-offset 4)
+
+(use-package helm-gtags
+  :init
+  (setq helm-gtags-auto-update t)
+  (setq helm-gtags-prefix-key "\C-cg")
+  (setq helm-gtags-suggested-key-mapping t)
+  :config
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+  (define-key helm-gtags-mode-map (kbd "C-c g c") 'helm-gtags-create-tags)
+  (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+  (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+  (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+  (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+  (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history))
+
+;;
+;; Language Server Stuff.
+;; Requires ninja on windows to generate compilation databases...
+;;(use-package lsp-mode
+;;  :hook
+;;  (c-mode . lsp)
+;;  :commands
+;;  lsp)
+
+;; (use-package lsp-ui :commands lsp-ui-mode)
+
+;; (use-package company-lsp
+;;   :config
+;;  (push 'company-lsp company-backends))
+
+;; Org Mode
+
+(use-package org
+  :bind
+  (("C-c l" . org-store-link)
+   ("C-c a" . org-agenda)
+   ("C-c c" . org-capture))
+  :config
+  (setq org-capture-templates
+	'(("t" "Todo" entry (file+headline "~/org/tasks.org" "Tasks")
+	   "* TODO %?\n %i\n %a")
+	  ("j" "Journal" entry (file+datetree "~org/journal.org")
+	   "* %?\nEntered on %U\n %i\n %a")
+	  ("m" "Meeting" entry (file+headline "~/org/notes/work.org" "Meetings")
+	   "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-backends
+   (quote
+    (company-lsp company-c-headers company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
+		 (company-dabbrev-code company-gtags company-etags company-keywords)
+		 company-oddmuse company-dabbrev)))
  '(package-selected-packages
    (quote
-    (clj-refactor clojure-mode-extra-font-locking clojure-mode smex uniquify exec-path-from-shell slime company projectile paredit helm zenburn-theme use-package))))
+    (uncrustify-mode company-lsp helm-gtags clj-refactor clojure-mode-extra-font-locking clojure-mode smex uniquify exec-path-from-shell slime company projectile paredit helm zenburn-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
