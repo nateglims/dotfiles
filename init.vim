@@ -10,6 +10,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-unimpaired'
 Plug 'jremmen/vim-ripgrep'
 Plug 'othree/xml.vim'
+Plug 'fatih/vim-go'
 call plug#end()
 
 " set term=xterm-256color
@@ -25,6 +26,7 @@ set ts=8 et sw=4 sts=4
 if has("win32")
     set mouse=a
     source $VIMRUNTIME/mswin.vim
+elseif has("macunix")
 else
     set term=xterm-256color
 endif
@@ -40,4 +42,3 @@ set pastetoggle=<F3>
 
 nnoremap <F5> "=strftime("%Y-%m-%d %a")<CR>P
 inoremap <F5> <C-R>=strftime("%Y-%m-%d %a")<CR>
-
