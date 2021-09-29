@@ -178,3 +178,6 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
             \ lua require'lsp_extensions'.inlay_hints{ prefix = ' ➤ ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}
+
+" Format rust files on save.
+autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
