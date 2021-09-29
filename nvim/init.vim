@@ -49,9 +49,7 @@ if has("win32")
     source $VIMRUNTIME/mswin.vim
 endif
 
-noremap <leader>b :make build<CR>
 noremap <leader>n :NERDTreeToggle<CR>
-noremap <leader>t :make test <CR>
 noremap <leader>y "*y
 noremap <leader>p "*p
 
