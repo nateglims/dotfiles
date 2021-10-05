@@ -47,9 +47,6 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2
 if has("win32")
     set mouse=a
     source $VIMRUNTIME/mswin.vim
-elseif has("macunix")
-else
-    set term=xterm-256color
 endif
 
 noremap <leader>b :make build<CR>
