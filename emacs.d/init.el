@@ -1,3 +1,16 @@
+;;; init.el --- Emacs configuration and initialization.
+
+;;; Commentary:
+
+;; This is just my dotfile stuff.
+
+;;; Code:
+
+;; Setup a custom file so it doesn't get added here.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
+;; Package stuff.
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -8,7 +21,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
@@ -26,14 +38,10 @@
   (scroll-bar-mode -1))
 
 (setq inhibit-startup-message t
-      inhibit-startup-echo-area-message t)  
+      inhibit-startup-echo-area-message t)
 
 (global-linum-mode t)
 
-(ido-mode)
-(setq ido-everywhere t)
-(setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point nil)
 (show-paren-mode 1)
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -49,34 +57,27 @@
 (use-package undo-tree)
 (use-package evil
   :after (undo-tree))
-;;; Font
+
+;; Font
 
 (set-face-attribute 'default nil :height 140)
 
-;;; Clipboard
+;; Clipboard
 
 (setq
-  x-select-enable-clipboard t
-  x-select-enable-primary t)
+  select-enable-clipboard t
+  select-enable-primary t)
 
 (setq
   save-interprogram-paste-before-kill t
-  apropos-do-all t
   mouse-yank-at-point t)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-;; Formerly Navigation
 
 (use-package uniquify
   :ensure nil
   :config
   (setq uniquify-buffer-name-style 'forward))
-
-(use-package recentf
-  :config
-  (setq recentf-save-file (concat user-emacs-directory ".recentf"))
-  (recentf-mode 1)
-  (setq recentf-max-menu-items 40))
 
 ;; MacOS Specific
 
@@ -94,14 +95,12 @@
 ;; General Packages
 
 (use-package helm
-  :bind (("M-x" . helm-M-x)
-	 ("C-x C-f" . helm-find-files)))
+  :bind ("C-x C-f" . 'helm-find-files))
 
 (use-package smex
   :config
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex))
-
 
 (use-package projectile
   :config
@@ -141,8 +140,7 @@
   (setq slime-contribs '(slime-fancy))
   (add-hook 'slime-mode-hook 'start-slime))
 
-;;; Clojure
-
+;; Clojure
 (use-package clojure-mode
   :config
   (add-hook 'clojure-mode-hook 'enable-paredit-mode)
@@ -160,78 +158,24 @@
   (setq cider-auto-select-error-buffer t)
   (add-hook 'cider-repl-mode-hook 'paredit-mode))
 
-;;; Shell
+;; Shell
 (setq-default sh-basic-offset 2)
 (setq-default sh-indentation 2)
 
-;;; Rust
-(use-package rust-mode
+;; Rust
+(use-package lsp-mode
+  :ensure
+  :custom
+  (lsp-rust-analyzer-cargo-watch-command "clippy"))
+
+(use-package rustic
   :config
-  (setq rust-format-on-save t))
+  (add-hook 'rustic-mode-hook 'tree-sitter-hl-mode))
 
-(use-package cargo
-  :config
-  (add-hook 'rust-mode-hook 'cargo-minor-mode))
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
 
-(use-package racer
-  :config
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-  (setq company-tooltip-align-annotations t))
-
-(use-package flycheck-rust
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-(use-package toml-mode
-  :mode "/\\(Cargo.lock\\|\\.cargo/config\\)\\'")
-
-
-;;; C
-(use-package clang-format)
-
-(use-package disaster)
-
-(use-package cmake-mode)
-
-(use-package company-c-headers
-  :config
-  (add-to-list 'company-backends 'company-c-headers))
-
-(setq c-default-style "bsd"
-      c-basic-offset 4)
-
-(use-package helm-gtags
-  :init
-  (setq helm-gtags-auto-update t)
-  (setq helm-gtags-prefix-key "\C-cg")
-  (setq helm-gtags-suggested-key-mapping t)
-  :config
-  (add-hook 'c-mode-hook 'helm-gtags-mode)
-  (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-  (define-key helm-gtags-mode-map (kbd "C-c g c") 'helm-gtags-create-tags)
-  (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-  (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-  (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-  (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-  (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history))
-
-;;
-;; Language Server Stuff.
-;; Requires ninja on windows to generate compilation databases...
-;;(use-package lsp-mode
-;;  :hook
-;;  (c-mode . lsp)
-;;  :commands
-;;  lsp)
-
-;; (use-package lsp-ui :commands lsp-ui-mode)
-
-;; (use-package company-lsp
-;;   :config
-;;  (push 'company-lsp company-backends))
+;; C
 
 ;; Org Mode
 
@@ -249,22 +193,4 @@
 	  ("m" "Meeting" entry (file+headline "~/org/notes/work.org" "Meetings")
 	   "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-backends
-   (quote
-    (company-lsp company-c-headers company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
-		 (company-dabbrev-code company-gtags company-etags company-keywords)
-		 company-oddmuse company-dabbrev)))
- '(package-selected-packages
-   (quote
-    (uncrustify-mode company-lsp helm-gtags clj-refactor clojure-mode-extra-font-locking clojure-mode smex uniquify exec-path-from-shell slime company projectile paredit helm zenburn-theme use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;;; init.el ends here
