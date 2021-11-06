@@ -8,6 +8,8 @@
 
 ;; Setup a custom file so it doesn't get added here.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(unless (file-exists-p custom-file)
+  (write-region "" "" custom-file))
 (load custom-file)
 
 ;; Package stuff.
@@ -54,16 +56,31 @@
 
 (setq-default frame-title-format "%b (%f)")
 
-(use-package undo-tree)
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
 (use-package evil
-  :after (undo-tree))
+  :after (undo-tree)
+  :config
+  (setq evil-search-module 'evil-search)
+  (setq evil-undo-system 'undo-tree))
+
+(evil-mode 1)
+
+;; Tramp
+(use-package tramp
+  :config
+  (setq tramp-default-method "ssh"))
+
+(use-package docker-tramp)
 
 ;; Font
-
-(set-face-attribute 'default nil :height 140)
+(let ((height (if (eq system-type 'darwin) 200 140)))
+  (set-face-attribute 'default nil :height height)
+  (set-face-attribute 'mode-line nil :height height))
 
 ;; Clipboard
-
 (setq
   select-enable-clipboard t
   select-enable-primary t)
@@ -89,8 +106,10 @@
 
 ;; The theme
 
-;;(use-package zenburn-theme)
-(use-package gruvbox-theme)
+(use-package gruvbox-theme
+  :config
+  (when (display-graphic-p)
+    (load-theme 'gruvbox-dark-hard t)))
 
 ;; General Packages
 
@@ -120,6 +139,12 @@
 (use-package flycheck
   :config
   (global-flycheck-mode))
+
+(use-package vterm
+  :bind (:map vterm-mode-map
+	      ("C-c C-t". vterm-send-C-c))
+  :config
+  (setq vterm-shell "zsh"))
 
 ;; Lisps
 (use-package paredit
@@ -181,16 +206,16 @@
 
 (use-package org
   :bind
-  (("C-c l" . org-store-link)
-   ("C-c a" . org-agenda)
-   ("C-c c" . org-capture))
+  (("C-c C-o l" . org-store-link)
+   ("C-c C-o a" . org-agenda)
+   ("C-c C-o c" . org-capture))
   :config
   (setq org-capture-templates
-	'(("t" "Todo" entry (file+headline "~/org/tasks.org" "Tasks")
+	'(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
 	   "* TODO %?\n %i\n %a")
-	  ("j" "Journal" entry (file+datetree "~org/journal.org")
+	  ("j" "Journal" entry (file+datetree "~/.org/journal.org")
 	   "* %?\nEntered on %U\n %i\n %a")
-	  ("m" "Meeting" entry (file+headline "~/org/notes/work.org" "Meetings")
+	  ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
 	   "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
 
 ;;; init.el ends here
