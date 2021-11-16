@@ -15,6 +15,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'vimwiki/vimwiki'
 " Plug 'tpope/vim-unimpaired'
 " Plug 'jremmen/vim-ripgrep'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Other language stuff
 Plug 'othree/xml.vim'
