@@ -4,11 +4,10 @@ filetype off
 call plug#begin('~/.local/share/nvim/plugged')
 " The good stuff.
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'     " Better Completions
 Plug 'nvim-lua/lsp_extensions.nvim' " Inlays!
+Plug 'ms-jpq/coq_nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}    " Highlighting among other things.
 Plug 'nvim-treesitter/playground', {'do': ':TSInstall query'}  " This is neat but idk yet.
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Utilities
 Plug 'scrooloose/nerdtree'
@@ -118,6 +117,7 @@ require'nvim-web-devicons'.setup {
 }
 
 local nvim_lsp = require('lspconfig')
+local coq = require "coq"
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -150,20 +150,19 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  require'completion'.on_attach(client, bufnr)
-
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities {
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
     }
   }
+  )
 end
 
 EOF
