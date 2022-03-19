@@ -65,6 +65,8 @@ set nobackup
 set nowritebackup
 set signcolumn=yes
 
+let g:coq_settings = { 'auto_start': v:true }
+
 lua <<EOF
 require('feline').setup()
 -- Tree Sitter setup
