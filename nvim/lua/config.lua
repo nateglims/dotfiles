@@ -11,16 +11,12 @@ set ruler
 
 set ts=4 et sw=4 sts=4
 
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2
+autocmd FileType yaml,lua setlocal ts=2 sts=2 sw=2
 
 if has("win32")
-    set mouse=a
-    source $VIMRUNTIME/mswin.vim
+  set mouse=a
+  source $VIMRUNTIME/mswin.vim
 endif
-
-noremap <leader>n :NERDTreeToggle<CR>
-noremap <leader>y "*y
-noremap <leader>p "*p
 
 set hidden
 set nobackup
@@ -39,10 +35,18 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
+
+" Do inlay hints on rust files.
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
-            \ lua require'lsp_extensions'.inlay_hints{ prefix = ' ➤ ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}
+  \ lua require'lsp_extensions'.inlay_hints{ prefix = ' ➤ ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}
 
 " Format rust files on save.
 autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 ]])
+
+-- Keybindings
+vim.api.nvim_set_keymap('n', '<Leader>rg', ':Rg<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>n', ':NERDTreeToggle<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>y', '"*y', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>p', '"*p', { noremap = true, silent = true})
 

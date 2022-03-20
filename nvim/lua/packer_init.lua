@@ -5,33 +5,35 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup(function()
-    use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
 
-    -- LSP and Treesitter
-    use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/lsp_extensions.nvim'
-    use 'ms-jpq/coq_nvim'
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-    use {'nvim-treesitter/playground', run = ':TSInstall query'}
+  -- LSP
+  use 'neovim/nvim-lspconfig'
+  use 'nvim-lua/lsp_extensions.nvim'
+  use 'ms-jpq/coq_nvim'
 
-    -- Utilities
-    use 'scrooloose/nerdtree'
-    use 'vimwiki/vimwiki'
-    -- use {'junegunn/fzf', run = { -> fzf#install() } }
-    use 'junegunn/fzf.vim'
+  -- Tree Sitter
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/playground', run = ':TSInstall query' }
 
-    -- Other languages
-    use 'othree/xml.vim'
-    use 'fatih/vim-go'
+  -- Utilities
+  use 'scrooloose/nerdtree'
+  use 'vimwiki/vimwiki'
+  use {'junegunn/fzf', run = function() vim.fn['fzf#install()']() end }
+  use {'junegunn/fzf.vim', after = 'fzf' }
 
-    -- Style and UI
-    use 'famiu/feline.nvim'
-    use 'kyazdani42/nvim-web-devicons'
-    use 'morhetz/gruvbox'
+  -- Other languages
+  use 'othree/xml.vim'
+  use 'fatih/vim-go'
 
-    -- Bootstrap packer if not run yet.
-    if packer_bootstrap then
-      require('packer').sync()
-    end
+  -- Style and UI
+  use 'famiu/feline.nvim'
+  use 'kyazdani42/nvim-web-devicons'
+  use 'morhetz/gruvbox'
+
+  -- Bootstrap packer if not run yet.
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 
 end)
