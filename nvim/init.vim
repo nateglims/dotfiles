@@ -14,6 +14,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'vimwiki/vimwiki'
 " Plug 'tpope/vim-unimpaired'
 " Plug 'jremmen/vim-ripgrep'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Other language stuff
 Plug 'othree/xml.vim'
@@ -62,6 +64,8 @@ set hidden
 set nobackup
 set nowritebackup
 set signcolumn=yes
+
+let g:coq_settings = { 'auto_start': v:true }
 
 lua <<EOF
 require('feline').setup()
