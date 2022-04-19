@@ -23,7 +23,7 @@ set nobackup
 set nowritebackup
 set signcolumn=yes
 
-let g:coq_settings = { 'auto_start': v:true }
+" let g:coq_settings = { 'auto_start': v:true }
 
 " Completion setup
 " Use <Tab> and <S-Tab> to navigate through popup menu
