@@ -49,4 +49,7 @@ vim.api.nvim_set_keymap('n', '<Leader>rg', ':Rg<CR>', { noremap = true, silent =
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NERDTreeToggle<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>y', '"*y', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>p', '"*p', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>tw', '"=strftime("%Y-%m-%d %a")<CR>P', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<F5>', '<C-R>=strftime("%Y-%m-%d %a")<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>cd', ":lua require'plugins/wiki'.ConvertToDocx()<CR>", { noremap = true, silent = true })
 
