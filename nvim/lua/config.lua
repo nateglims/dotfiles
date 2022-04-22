@@ -44,12 +44,10 @@ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
 autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 ]])
 
--- Keybindings
-vim.api.nvim_set_keymap('n', '<Leader>rg', ':Rg<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>n', ':NERDTreeToggle<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>y', '"*y', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>p', '"*p', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>tw', '"=strftime("%Y-%m-%d %a")<CR>P', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '<F5>', '<C-R>=strftime("%Y-%m-%d %a")<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>cd', ":lua require'plugins/wiki'.ConvertToDocx()<CR>", { noremap = true, silent = true })
-
+-- Auto sync packer when saving the plugin list file.
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost packer_init.lua source <afile> | PackerSync
+  augroup end
+]]

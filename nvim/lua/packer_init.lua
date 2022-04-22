@@ -1,10 +1,28 @@
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
-return require('packer').startup(function()
+-- Prevent error dump when packer isn't initialized.
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+  vim.notify("Packer not installed.")
+  return
+end
+
+-- Use a floating window instead of splitting.
+packer.init {
+  display = {
+    open_fn = function()
+      -- This takes the same options as `nvim_open_win`
+      return require("packer.util").float {}
+    end
+  }
+}
+
+return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- LSP
@@ -16,19 +34,19 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
 
-  -- For vsnip users.
+  -- Snippets are needed for nvim-cmp
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
 
   -- Tree Sitter
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use {'nvim-treesitter/playground', run = ':TSInstall query' }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/playground', run = ':TSInstall query' }
 
   -- Utilities
-  use 'scrooloose/nerdtree'
+  -- use 'scrooloose/nerdtree'
   use 'vimwiki/vimwiki'
-  use {'junegunn/fzf', run = function() vim.fn['fzf#install()']() end }
-  use {'junegunn/fzf.vim', after = 'fzf' }
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-telescope/telescope.nvim'
 
   -- Other languages
   use 'othree/xml.vim'

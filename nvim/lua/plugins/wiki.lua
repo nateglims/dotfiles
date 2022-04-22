@@ -1,5 +1,5 @@
-vim.g.vimwiki_list = { 
-  { 
+vim.g.vimwiki_list = {
+  {
     path = '~/Amazon WorkDocs Drive/My Documents/wiki/',
     name = 'My Wiki',
   }
@@ -11,8 +11,8 @@ local export_path = '~/Amazon WorkDocs Drive/My Documents/generated'
 local M = {}
 local api = vim.api
 
-local Job = require'plenary.job'
-local Path = require'plenary.path'
+local Job = require 'plenary.job'
+local Path = require 'plenary.path'
 
 function M.ConvertToDocx()
   -- Get the full path of the buffer.
