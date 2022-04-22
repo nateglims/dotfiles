@@ -1,5 +1,6 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require'cmp'
+local rust_tools = require('rust-tools')
 
 cmp.setup({
   snippet = {
@@ -91,8 +92,8 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver', 'clangd' }
+local servers = { 'pyright', 'tsserver', 'clangd' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup{ on_attach = on_attach, capabilities = capabilities }
 end
-
+rust_tools.setup({ server = { on_attach = on_attach, capabilities = capabilities } })

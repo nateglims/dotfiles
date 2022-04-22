@@ -33,6 +33,7 @@ return require('packer').startup(function()
   -- Other languages
   use 'othree/xml.vim'
   use 'fatih/vim-go'
+  use 'simrat39/rust-tools.nvim'
 
   -- Style and UI
   use 'famiu/feline.nvim'
