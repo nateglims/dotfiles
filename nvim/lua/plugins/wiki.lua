@@ -21,13 +21,30 @@ function M.ConvertToDocx()
 
   Job:new({
     command = 'pandoc',
-    args = { bufpath, '-o', string.format("%s.docx", bufname), '-s', '--to=docx', '--from=vimwiki' },
+    args = {
+      bufpath,
+      '--output', string.format("%s.docx", bufname),
+      '--standalone',
+      '--to=docx',
+      '--from=vimwiki',
+      '--number-sections',
+      '--highlight-style=/Users/glimsdal/Amazon WorkDocs Drive/My Documents/syntax-highlight.theme',
+      '--reference-doc=/Users/glimsdal/Amazon WorkDocs Drive/My Documents/custom-reference.docx',
+    },
     cwd = Path:new(export_path):normalize(),
     -- env = { PATH = vim.env.PATH },
     on_exit = function(j, return_val)
+      vim.inspect.inspect(j:result())
       print(return_val)
     end,
+    on_stdout = function(_, line)
+      print(line)
+    end,
+    on_stderr = function(_, line)
+      print(line)
+    end
   }):sync()
+
 
 end
 
