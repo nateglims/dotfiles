@@ -64,7 +64,12 @@
   :after (undo-tree)
   :config
   (setq evil-search-module 'evil-search)
-  (setq evil-undo-system 'undo-tree))
+  (setq evil-undo-system 'undo-tree)
+  (define-key evil-normal-state-map (kbd "C-e") 'end-of-line)
+  (define-key evil-insert-state-map (kbd "C-e") 'end-of-line))
+
+(use-package evil-paredit
+  :after (evil))
 
 (evil-mode 1)
 
