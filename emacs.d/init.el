@@ -12,7 +12,7 @@
   (write-region "" "" custom-file))
 (load custom-file)
 
-;; Package stuff.
+;; Package management
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -56,6 +56,47 @@
 
 (setq-default frame-title-format "%b (%f)")
 
+;; Font
+(let ((height (if (eq system-type 'darwin) 200 160)))
+  (set-face-attribute 'default nil :height height)
+  (set-face-attribute 'mode-line nil :height height))
+
+;; Clipboard
+(setq
+  select-enable-clipboard t
+  select-enable-primary t)
+
+(setq
+  save-interprogram-paste-before-kill t
+  mouse-yank-at-point t)
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; MacOS Specific
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)
+    (exec-path-from-shell-copy-envs '("PATH"))))
+
+;; The theme
+
+(use-package gruvbox-theme
+  :config
+  (if (display-graphic-p)
+      (load-theme 'gruvbox-dark-hard t)
+    (load-theme 'gruvbox-dark-medium t)))
+
+;; General Packages
+
+;;; Slightly better buffer names
+(use-package uniquify
+  :ensure nil
+  :config
+  (setq uniquify-buffer-name-style 'forward))
+
+;;; Evil Setup
 (use-package undo-tree
   :config
   (global-undo-tree-mode))
@@ -73,83 +114,29 @@
 
 (evil-mode 1)
 
-;; Tramp
-(use-package tramp
-  :config
-  (setq tramp-default-method "ssh"))
-
-(use-package docker-tramp)
-
-;; Font
-(let ((height (if (eq system-type 'darwin) 200 140)))
-  (set-face-attribute 'default nil :height height)
-  (set-face-attribute 'mode-line nil :height height))
-
-;; Clipboard
-(setq
-  select-enable-clipboard t
-  select-enable-primary t)
-
-(setq
-  save-interprogram-paste-before-kill t
-  mouse-yank-at-point t)
-
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(use-package uniquify
-  :ensure nil
-  :config
-  (setq uniquify-buffer-name-style 'forward))
-
-;; MacOS Specific
-
-(use-package exec-path-from-shell
-  :config
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-envs '("PATH"))))
-
-;; The theme
-
-(use-package gruvbox-theme
-  :config
-  (when (display-graphic-p)
-    (load-theme 'gruvbox-dark-hard t)))
-
-;; General Packages
-
-(use-package helm
-  :bind ("C-x C-f" . 'helm-find-files))
-
+;;; Smart M-x
 (use-package smex
   :config
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex))
-
-(use-package projectile
-  :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
 
 (use-package which-key
   :ensure t
   :config
   (which-key-mode +1))
 
-(use-package company
-  :config
-  (global-company-mode))
+;; Tramp
 
-(use-package flycheck
+(use-package tramp
   :config
-  (global-flycheck-mode))
+  (setq tramp-default-method "ssh"))
 
-(use-package vterm
-  :bind (:map vterm-mode-map
-	      ("C-c C-t". vterm-send-C-c))
-  :config
-  (setq vterm-shell "zsh"))
+(use-package docker-tramp)
+
+;; Project.el
+
+(if (version< (number-to-string emacs-major-version) "28")
+    (use-package project))
 
 ;; Lisps
 (use-package paredit
@@ -192,18 +179,20 @@
 (setq-default sh-basic-offset 2)
 (setq-default sh-indentation 2)
 
-;; Rust
-(use-package lsp-mode
-  :ensure
-  :custom
-  (lsp-rust-analyzer-cargo-watch-command "clippy"))
-
-(use-package rustic
-  :config
-  (add-hook 'rustic-mode-hook 'tree-sitter-hl-mode))
-
+;; Fancy New Toys
+(use-package eglot)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
+
+
+;; Rust
+(use-package rustic
+  :config
+  (add-hook 'rustic-mode-hook 'tree-sitter-hl-mode)
+  (setq rustic-lsp-client 'eglot))
+
+;; Typescript
+
 
 ;; C
 
