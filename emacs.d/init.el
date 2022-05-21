@@ -82,11 +82,7 @@
 
 ;; The theme
 
-(use-package gruvbox-theme
-  :config
-  (if (display-graphic-p)
-      (load-theme 'gruvbox-dark-hard t)
-    (load-theme 'gruvbox-dark-medium t)))
+(load-theme 'modus-vivendi)
 
 ;; General Packages
 
@@ -112,13 +108,28 @@
 (use-package evil-paredit
   :after (evil))
 
-(evil-mode 1)
+(evil-mode +1)
 
-;;; Smart M-x
-(use-package smex
-  :config
-  (smex-initialize)
-  (global-set-key (kbd "M-x") 'smex))
+;;; TODO: Find non-lsp providers for flymake:
+;;; 1. Clippy
+;;; 2. elisp
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+;;; Completion
+
+(use-package prescient)
+(use-package selectrum-prescient)
+(use-package company-prescient)
+
+(use-package company
+  :config (global-company-mode +1)
+  :hook (company-mode . company-prescient-mode))
+
+(use-package selectrum
+  :config (progn
+	    (selectrum-mode +1)
+	    (selectrum-prescient-mode +1)))
 
 (use-package which-key
   :ensure t
@@ -180,21 +191,43 @@
 (setq-default sh-indentation 2)
 
 ;; Fancy New Toys
-(use-package eglot)
-(use-package tree-sitter)
+
+;;; LSP
+(use-package eglot
+  :hook (eglot--managed-mode-hook . (lambda () (flymake-mode -1))))
+
+;;; Tree Sitter
+(use-package tree-sitter
+  :init (global-tree-sitter-mode))
 (use-package tree-sitter-langs)
 
 
 ;; Rust
 (use-package rustic
-  :config
-  (add-hook 'rustic-mode-hook 'tree-sitter-hl-mode)
-  (setq rustic-lsp-client 'eglot))
+  :config (progn
+	    (setq rustic-lsp-client 'eglot)
+	    (setq rustic-format-on-save t)
+	    (setq rustic-lsp-format nil)
+	    (add-hook 'rustic-mode (lambda () (flymake-mode -1))))
+  :hook ((rustic-mode . tree-sitter-hl-mode)
+	 (rustic-mode . company-mode)))
 
 ;; Typescript
 
+(use-package typescript-mode
+  :hook ((typescript-mode . eglot-ensure)
+	 (typescript-mode . company-mode)
+	 (typescript-mode . tree-sitter-hl-mode)
+	 (typescript-mode . flycheck-mode)
+	 (typescript-mode . (lambda () (flymake-mode -1)))))
 
 ;; C
+
+;; Python
+
+;;; TODO: Setup pyright
+
+;; Yocto
 
 ;; Org Mode
 
