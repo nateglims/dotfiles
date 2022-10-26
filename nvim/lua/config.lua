@@ -3,7 +3,7 @@ set encoding=utf-8
 
 set bg=dark
 set termguicolors
-colorscheme gruvbox
+colorscheme tokyonight-night
 highlight Comment cterm=italic
 
 set number

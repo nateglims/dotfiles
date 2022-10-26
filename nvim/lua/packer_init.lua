@@ -56,6 +56,7 @@ return packer.startup(function(use)
   -- Style and UI
   use 'famiu/feline.nvim'
   use 'kyazdani42/nvim-web-devicons'
+  use 'folke/tokyonight.nvim'
   use 'morhetz/gruvbox'
 
   -- Bootstrap packer if not run yet.
