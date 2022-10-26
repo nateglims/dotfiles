@@ -54,11 +54,14 @@ return packer.startup(function(use)
   use 'simrat39/rust-tools.nvim'
 
   -- Style and UI
-  use 'famiu/feline.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use 'folke/tokyonight.nvim'
   use 'morhetz/gruvbox'
 
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
   -- Bootstrap packer if not run yet.
   if packer_bootstrap then
     require('packer').sync()
