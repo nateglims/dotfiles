@@ -84,6 +84,13 @@
 
 (load-theme 'modus-vivendi)
 
+;; Remote
+
+(defun my-vc-off-if-remote ()
+  (if (file-remote-p (buffer-file-name))
+      (setq-local vc-handled-backends nil)))
+(add-hook 'find-file-hook 'my-vc-off-if-remote)
+
 ;; General Packages
 
 ;;; Slightly better buffer names
@@ -92,7 +99,8 @@
   :config
   (setq uniquify-buffer-name-style 'forward))
 
-;;; Evil Setup
+;;; Key-bindings Setup
+
 (use-package undo-tree
   :config
   (global-undo-tree-mode))
@@ -113,8 +121,6 @@
 ;;; TODO: Find non-lsp providers for flymake:
 ;;; 1. Clippy
 ;;; 2. elisp
-(use-package flycheck
-  :init (global-flycheck-mode))
 
 ;;; Completion
 
@@ -140,7 +146,9 @@
 
 (use-package tramp
   :config
-  (setq tramp-default-method "ssh"))
+  (setq tramp-default-method "ssh")
+  (add-to-list 'tramp-remote-path "/apollo/env/NodeJS/bin")
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 (use-package docker-tramp)
 
@@ -206,11 +214,10 @@
 (use-package rustic
   :config (progn
 	    (setq rustic-lsp-client 'eglot)
-	    (setq rustic-format-on-save t)
-	    (setq rustic-lsp-format nil)
 	    (add-hook 'rustic-mode (lambda () (flymake-mode -1))))
   :hook ((rustic-mode . tree-sitter-hl-mode)
 	 (rustic-mode . company-mode)))
+
 
 ;; Typescript
 
