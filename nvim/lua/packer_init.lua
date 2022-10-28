@@ -43,7 +43,6 @@ return packer.startup(function(use)
   use { 'nvim-treesitter/playground', run = ':TSInstall query' }
 
   -- Utilities
-  -- use 'scrooloose/nerdtree'
   use 'vimwiki/vimwiki'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
