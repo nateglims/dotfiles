@@ -1,0 +1,7 @@
+{
+   "runtime": { "version": "LuaJIT"},
+   "diagnostics" : {
+      "enable" : true,
+      "globals" : ["vim", "use"]
+    }
+}
