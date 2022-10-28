@@ -35,8 +35,10 @@ return packer.startup(function(use)
   use 'hrsh7th/nvim-cmp'
 
   -- Snippets are needed for nvim-cmp
-  use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
+  use 'rafamadriz/friendly-snippets'
+  use({"L3MON4D3/LuaSnip", tag = "v1.*"})
+  use 'saadparwaiz1/cmp_luasnip'
+
 
   -- Tree Sitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
