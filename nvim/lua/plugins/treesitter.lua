@@ -1,6 +1,15 @@
+local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+parser_config.bitbake = {
+  install_info = {
+    url = "https://github.com/nateglims/tree-sitter-bb",
+    files = {"src/parser.c"},
+    branch = "main",
+  },
+}
+
 -- Tree Sitter setup
 require 'nvim-treesitter.configs'.setup {
-  ensure_installed = { "rust", "typescript", "c", "lua" , "zig"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = { "rust", "go", "typescript", "c", "lua" , "zig", "bitbake"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = {}, -- List of parsers to ignore installing
   highlight = {
     enable = true, -- false will disable the whole extension
