@@ -1,3 +1,2 @@
-emacs.d/*
-!emacs.d/init.el
 nvim/plugin
+*.~undo-tree~
