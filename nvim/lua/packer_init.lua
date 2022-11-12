@@ -41,8 +41,8 @@ return packer.startup(function(use)
 
 
   -- Tree Sitter
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'nvim-treesitter/playground', run = ':TSInstall query' }
+  use 'nvim-treesitter/nvim-treesitter'
+  use 'nvim-treesitter/playground'
 
   -- Utilities
   use 'vimwiki/vimwiki'
