@@ -154,7 +154,6 @@
 (use-package tramp
   :config
   (setq tramp-default-method "ssh")
-  (add-to-list 'tramp-remote-path "/apollo/env/NodeJS/bin")
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 (use-package docker-tramp)
