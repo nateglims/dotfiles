@@ -61,6 +61,12 @@
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
+(let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono")))
+  (dolist (font font-list)
+    (if (find-font (font-spec :name font))
+	(set-frame-font "MesloLGL Nerd Font Mono" nil t)
+      (message "%s not found." font))))
+
 ;; Clipboard
 (setq
   select-enable-clipboard t
@@ -81,8 +87,9 @@
     (exec-path-from-shell-copy-envs '("PATH"))))
 
 ;; The theme
-
-(load-theme 'modus-vivendi)
+(use-package base16-theme
+  :config
+  (load-theme 'base16-tokyo-night-dark))
 
 ;; Remote
 
