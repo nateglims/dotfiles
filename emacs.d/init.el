@@ -86,12 +86,22 @@
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("PATH"))))
 
-;; The theme
+ ;; The theme
 (use-package base16-theme
   :config
-  (load-theme 'base16-tokyo-night-dark))
-
-;; Remote
+  (progn
+    (with-eval-after-load "base16-tokyo-night-dark-theme"
+      (custom-theme-set-faces
+       'base16-tokyo-night-dark
+       '(selectrum-current-candidate
+	((t (:background "#48384c"
+			 :weight bold
+			 :foreground "#c678dd"))))
+       '(selectrum-prescient-primary-highlight
+	((t (:foreground "#da8548"))))
+       '(selectrum-prescient-secondary-highlight
+	((t (:foreground "#98be65"))))))
+    (load-theme 'base16-tokyo-night-dark t)))
 
 (defun my-vc-off-if-remote ()
   (if (file-remote-p (buffer-file-name))
