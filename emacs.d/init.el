@@ -61,10 +61,10 @@
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
-(let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono")))
+(let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono" "Cascadia Code")))
   (dolist (font font-list)
     (if (find-font (font-spec :name font))
-	(set-frame-font "MesloLGL Nerd Font Mono" nil t)
+	(set-frame-font font nil t)
       (message "%s not found." font))))
 
 ;; Clipboard
