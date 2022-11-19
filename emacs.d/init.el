@@ -64,7 +64,7 @@
 (let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono" "Cascadia Code")))
   (dolist (font font-list)
     (if (find-font (font-spec :name font))
-	(set-frame-font font nil t)
+        (set-frame-font font nil t)
       (message "%s not found." font))))
 
 ;; Clipboard
@@ -94,13 +94,13 @@
       (custom-theme-set-faces
        'base16-tokyo-night-dark
        '(selectrum-current-candidate
-	((t (:background "#48384c"
-			 :weight bold
-			 :foreground "#c678dd"))))
+        ((t (:background "#48384c"
+                         :weight bold
+                         :foreground "#c678dd"))))
        '(selectrum-prescient-primary-highlight
-	((t (:foreground "#da8548"))))
+        ((t (:foreground "#da8548"))))
        '(selectrum-prescient-secondary-highlight
-	((t (:foreground "#98be65"))))))
+        ((t (:foreground "#98be65"))))))
     (load-theme 'base16-tokyo-night-dark t)))
 
 (defun my-vc-off-if-remote ()
@@ -151,8 +151,8 @@
 
 (use-package selectrum
   :config (progn
-	    (selectrum-mode +1)
-	    (selectrum-prescient-mode +1)))
+            (selectrum-mode +1)
+            (selectrum-prescient-mode +1)))
 
 (use-package which-key
   :ensure t
@@ -225,24 +225,21 @@
   :init (global-tree-sitter-mode))
 (use-package tree-sitter-langs)
 
-
 ;; Rust
 (use-package rustic
   :config (progn
-	    (setq rustic-lsp-client 'eglot)
-	    (add-hook 'rustic-mode (lambda () (flymake-mode -1))))
+            (setq rustic-lsp-client 'eglot)
+            (add-hook 'rustic-mode (lambda () (flymake-mode -1))))
   :hook ((rustic-mode . tree-sitter-hl-mode)
-	 (rustic-mode . company-mode)))
-
+         (rustic-mode . company-mode)))
 
 ;; Typescript
-
 (use-package typescript-mode
   :hook ((typescript-mode . eglot-ensure)
-	 (typescript-mode . company-mode)
-	 (typescript-mode . tree-sitter-hl-mode)
-	 (typescript-mode . flycheck-mode)
-	 (typescript-mode . (lambda () (flymake-mode -1)))))
+         (typescript-mode . company-mode)
+         (typescript-mode . tree-sitter-hl-mode)
+         (typescript-mode . flycheck-mode)
+         (typescript-mode . (lambda () (flymake-mode -1)))))
 
 ;; C
 
@@ -261,11 +258,11 @@
    ("C-c C-o c" . org-capture))
   :config
   (setq org-capture-templates
-	'(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
-	   "* TODO %?\n %i\n %a")
-	  ("j" "Journal" entry (file+datetree "~/.org/journal.org")
-	   "* %?\nEntered on %U\n %i\n %a")
-	  ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
-	   "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
+    '(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
+       "* TODO %?\n %i\n %a")
+      ("j" "Journal" entry (file+datetree "~/.org/journal.org")
+       "* %?\nEntered on %U\n %i\n %a")
+      ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
+       "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
 
 ;;; init.el ends here
