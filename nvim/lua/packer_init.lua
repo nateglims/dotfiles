@@ -2,7 +2,8 @@ local fn = vim.fn
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
 end
 
 -- Prevent error dump when packer isn't initialized.
@@ -36,7 +37,7 @@ return packer.startup(function(use)
 
   -- Snippets are needed for nvim-cmp
   use 'rafamadriz/friendly-snippets'
-  use({"L3MON4D3/LuaSnip", tag = "v1.*"})
+  use({ "L3MON4D3/LuaSnip", tag = "v1.*" })
   use 'saadparwaiz1/cmp_luasnip'
 
 
@@ -51,7 +52,7 @@ return packer.startup(function(use)
 
   -- Other languages
   use 'othree/xml.vim'
-  use 'fatih/vim-go'
+  use 'ray-x/go.nvim'
   use 'simrat39/rust-tools.nvim'
 
   -- Style and UI

@@ -1,10 +1,11 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
-local rust_tools = require('rust-tools')
 local luasnip = require('luasnip')
 
+local M = {}
+
 require("luasnip/loaders/from_vscode").lazy_load()
-require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/snippets"})
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets" })
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -83,7 +84,7 @@ cmp.setup.cmdline(':', {
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+function M.on_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -118,12 +119,17 @@ local on_attach = function(client, bufnr)
 end
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+M.capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'tsserver', 'clangd', 'sumneko_lua', 'zls' }
+local servers = { 'pyright', 'tsserver', 'clangd', 'zls' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach, capabilities = capabilities }
+  nvim_lsp[lsp].setup { on_attach = M.on_attach, capabilities = M.capabilities }
 end
-rust_tools.setup({ server = { on_attach = on_attach, capabilities = capabilities } })
+
+function M.setup_lsp(server)
+  nvim_lsp[server].setup { on_attach = M.on_attach, capabilities = M.capabilities }
+end
+
+return M

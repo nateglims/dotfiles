@@ -7,10 +7,10 @@ set_keymap('n', '<Leader>n', ':Telescope find_files previewer=false<CR>', opts)
 set_keymap('n', '<Leader>N', ':Lex 40<CR>', opts)
 set_keymap('n', '<Leader>b', ':Telescope buffers<CR>', opts)
 
-set_keymap('n', '<Leader>y', '"*y', opts)
-set_keymap('n', '<Leader>p', '"*p', opts)
-
+-- Put the date into into the buffer.
 set_keymap('n', '<Leader>tw', '"=strftime("%Y-%m-%d %a")<CR>P', opts)
 set_keymap('i', '<F5>', '<C-R>=strftime("%Y-%m-%d %a")<CR>', opts)
-set_keymap('n', '<Leader>cd', ":lua require'plugins/wiki'.ConvertToDocx()<CR>", opts)
-set_keymap('n', '<Leader>cx', ":lua require'plugins/wiki'.ConvertToWiki()<CR>", opts)
+
+-- Yank and paste into/from OS buffer
+set_keymap('n', '[y', '"*y', opts)
+set_keymap('n', '[p', '"*p', opts)

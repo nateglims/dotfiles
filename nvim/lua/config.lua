@@ -23,8 +23,6 @@ set nobackup
 set nowritebackup
 set signcolumn=yes
 
-" let g:coq_settings = { 'auto_start': v:true }
-
 " Completion setup
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -36,12 +34,6 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" Do inlay hints on rust files.
-"autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
-"  \ lua require'lsp_extensions'.inlay_hints{ prefix = ' ➤ ', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}
-
-" Format rust files on save.
-autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 ]])
 
 -- Auto sync packer when saving the plugin list file.
