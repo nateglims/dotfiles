@@ -79,14 +79,13 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; MacOS Specific
-
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("PATH"))))
 
- ;; The theme
+;; The theme
 (use-package base16-theme
   :config
   (progn
@@ -210,6 +209,16 @@
   (setq cider-auto-select-error-buffer t)
   (add-hook 'cider-repl-mode-hook 'paredit-mode))
 
+;; Set JAVA_HOME
+(let ((home (getenv "HOME")))
+  (if (not (null home))
+      (let ((sdkdir (concat (file-name-as-directory (getenv "HOME"))
+			    ".sdkman/candidates/java/current")))
+	(if (file-directory-p sdkdir)
+	    (setenv "JAVA_HOME" sdkdir)
+	  (message "SDKMAN Dir Not Found.")))
+    (message "$HOME is null.")))
+
 ;; Shell
 (setq-default sh-basic-offset 2)
 (setq-default sh-indentation 2)
@@ -219,6 +228,14 @@
 ;;; LSP
 (use-package eglot
   :hook (eglot--managed-mode-hook . (lambda () (flymake-mode -1))))
+
+(setq-default eglot-workspace-configuration
+    '((:gopls .
+        ((staticcheck . t)
+         (matcher . "CaseSensitive")))))
+
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
 ;;; Tree Sitter
 (use-package tree-sitter
@@ -241,11 +258,21 @@
          (typescript-mode . flycheck-mode)
          (typescript-mode . (lambda () (flymake-mode -1)))))
 
-;; C
+;; Go
+(use-package go-mode)
 
-;; Python
+(defun project-find-go-module (dir)
+  (when-let ((root (locate-dominating-file dir "go.mod")))
+    (cons 'go-module root)))
 
-;;; TODO: Setup pyright
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+
+(add-hook 'project-find-functions #'project-find-go-module)
+
+(add-hook 'go-mode-hook 'eglot-ensure)
+
+(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
 
 ;; Yocto
 
