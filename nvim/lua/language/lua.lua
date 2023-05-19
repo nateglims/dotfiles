@@ -1,6 +1,6 @@
 local lsp = require('lsp')
 
-lsp.setup_lsp('sumneko_lua')
+lsp.setup_lsp('lua_ls')
 
 -- Format lua files on save.
 vim.api.nvim_create_autocmd("BufWritePre", {
