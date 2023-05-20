@@ -26,14 +26,6 @@ packer.init {
 return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  -- LSP
-  use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/lsp_extensions.nvim'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
 
   -- Snippets are needed for nvim-cmp
   use 'rafamadriz/friendly-snippets'
@@ -42,13 +34,38 @@ return packer.startup(function(use)
 
 
   -- Tree Sitter
-  use 'nvim-treesitter/nvim-treesitter'
-  use 'nvim-treesitter/playground'
 
   -- Utilities
   use 'vimwiki/vimwiki'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
+  use {
+    "nvim-neorg/neorg",
+    run = ":Neorg sync-parsers", -- This is the important bit!
+    config = function()
+      require("neorg").setup {
+        -- configuration here
+        load = {
+          ["core.defaults"] = {},       -- Loads default behaviour
+          ["core.export"] = {},
+          ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.norg.dirman"] = {
+            config = {
+              workspaces = {
+                notes = "~/Amazon WorkDocs Drive/My Documents/notes",
+                meetings = "~/Amazon WorkDocs Drive/My Documents/meetings",
+              },
+            },
+          },
+          ["core.norg.completion"] = {
+            config = {
+              engine = "nvim-cmp",
+            },
+          },
+        }
+      }
+    end,
+  }
 
   -- Other languages
   use 'othree/xml.vim'
@@ -68,5 +85,4 @@ return packer.startup(function(use)
   if packer_bootstrap then
     require('packer').sync()
   end
-
 end)

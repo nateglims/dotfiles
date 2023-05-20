@@ -50,6 +50,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip', option = { show_autosnippets = true } },
+    { name = "neorg" },
   }, {
     { name = 'buffer' },
   })
@@ -115,7 +116,6 @@ function M.on_attach(client, bufnr)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-
 end
 
 -- Setup lspconfig.

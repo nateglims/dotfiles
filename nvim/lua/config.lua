@@ -1,9 +1,7 @@
 vim.cmd([[
 set encoding=utf-8
 
-set bg=dark
 set termguicolors
-colorscheme tokyonight-night
 highlight Comment cterm=italic
 
 set number
@@ -35,11 +33,3 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 ]])
-
--- Auto sync packer when saving the plugin list file.
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost packer_init.lua source <afile> | PackerSync
-  augroup end
-]]
