@@ -1,6 +1,6 @@
 return {
-    s({trig="con", dscr="A CDK Construct"},
-      fmta(
+  s({ trig = "con", dscr = "A CDK Construct" },
+    fmta(
       [[
         import * as cdk from 'aws-cdk-lib';
         import { Construct } from 'constructs';
@@ -8,7 +8,7 @@ return {
         /**
          * ...
          */
-        export <>Props interface {
+        export interface <>Props {
             /** */
         }
         /**
@@ -27,9 +27,9 @@ return {
         rep(1),
         i(2),
       })
-    ),
-    s({trig="stk", dscr="A CDK Stack"},
-      fmta(
+  ),
+  s({ trig = "stk", dscr = "A CDK Stack" },
+    fmta(
       [[
         import * as cdk from 'aws-cdk-lib';
         import { Construct } from 'constructs';
@@ -37,7 +37,7 @@ return {
         /**
          * ...
          */
-        export <>Props interface extends cdk.StackProps {
+        export interface <>Props extends cdk.StackProps {
             /** */
         }
         /**
@@ -56,5 +56,5 @@ return {
         rep(1),
         i(2),
       })
-    ),
+  ),
 }
