@@ -15,8 +15,8 @@
 ;; Package management
 (require 'package)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
 
 (package-initialize)
 
@@ -55,6 +55,11 @@
 (setq create-lockfiles nil)
 
 (setq-default frame-title-format "%b (%f)")
+
+(setq-default fill-column 80
+              indent-tabs-mode nil
+              tab-always-indent 'complete
+              require-final-newline t)
 
 ;; Font
 (let ((height (if (eq system-type 'darwin) 200 160)))
@@ -121,42 +126,50 @@
   :config
   (global-undo-tree-mode))
 
-(use-package evil
-  :after (undo-tree)
+(use-package meow
   :config
-  (setq evil-search-module 'evil-search)
-  (setq evil-undo-system 'undo-tree)
-  (define-key evil-normal-state-map (kbd "C-e") 'end-of-line)
-  (define-key evil-insert-state-map (kbd "C-e") 'end-of-line))
+  (load-file "~/.emacs.d/meow.el")
+  (meow-setup)
+  (meow-global-mode))
 
-(use-package evil-paredit
-  :after (evil))
+;;; Completion etc
 
-(evil-mode +1)
+;;; Consult?
 
-;;; TODO: Find non-lsp providers for flymake:
-;;; 1. Clippy
-;;; 2. elisp
+(use-package orderless
+  :ensure t
+  :config
+  (add-to-list 'completion-styles 'orderless))
 
-;;; Completion
+(use-package marginalia
+  :ensure t
+  :config (marginalia-mode))
 
-(use-package prescient)
-(use-package selectrum-prescient)
-(use-package company-prescient)
+(use-package embark
+  :ensure t
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings)))
 
-(use-package company
-  :config (global-company-mode +1)
-  :hook (company-mode . company-prescient-mode))
-
-(use-package selectrum
-  :config (progn
-            (selectrum-mode +1)
-            (selectrum-prescient-mode +1)))
+(use-package corfu
+  :ensure t
+  :config (corfu-mode))
 
 (use-package which-key
   :ensure t
   :config
   (which-key-mode +1))
+
+(use-package vertico
+  :ensure t
+  :bind (:map vertico-map
+              ("C-n" . vertico-next)
+              ("C-p" . vertico-previous)
+              :map minibuffer-local-map
+              ("C-w" . backward-kill-word))
+  :init  (vertico-mode)
+  :custom (vertico-cycle t))
 
 ;; Tramp
 
@@ -213,10 +226,10 @@
 (let ((home (getenv "HOME")))
   (if (not (null home))
       (let ((sdkdir (concat (file-name-as-directory (getenv "HOME"))
-			    ".sdkman/candidates/java/current")))
-	(if (file-directory-p sdkdir)
-	    (setenv "JAVA_HOME" sdkdir)
-	  (message "SDKMAN Dir Not Found.")))
+                            ".sdkman/candidates/java/current")))
+        (if (file-directory-p sdkdir)
+            (setenv "JAVA_HOME" sdkdir)
+          (message "SDKMAN Dir Not Found.")))
     (message "$HOME is null.")))
 
 ;; Shell
@@ -247,13 +260,11 @@
   :config (progn
             (setq rustic-lsp-client 'eglot)
             (add-hook 'rustic-mode (lambda () (flymake-mode -1))))
-  :hook ((rustic-mode . tree-sitter-hl-mode)
-         (rustic-mode . company-mode)))
+  :hook ((rustic-mode . tree-sitter-hl-mode)))
 
 ;; Typescript
 (use-package typescript-mode
   :hook ((typescript-mode . eglot-ensure)
-         (typescript-mode . company-mode)
          (typescript-mode . tree-sitter-hl-mode)
          (typescript-mode . flycheck-mode)
          (typescript-mode . (lambda () (flymake-mode -1)))))
@@ -274,6 +285,10 @@
 
 (add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
 
+ ;; Zig
+
+(use-package zig-mode)
+
 ;; Yocto
 
 ;; Org Mode
@@ -285,8 +300,8 @@
    ("C-c C-o c" . org-capture))
   :config
   (setq org-capture-templates
-    '(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
-       "* TODO %?\n %i\n %a")
+        '(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
+           "* TODO %?\n %i\n %a")
       ("j" "Journal" entry (file+datetree "~/.org/journal.org")
        "* %?\nEntered on %U\n %i\n %a")
       ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
