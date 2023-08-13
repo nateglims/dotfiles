@@ -145,16 +145,12 @@
   :ensure t
   :config (marginalia-mode))
 
-(use-package embark
-  :ensure t
-  :bind
-  (("C-." . embark-act)
-   ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings)))
-
 (use-package corfu
   :ensure t
-  :config (corfu-mode))
+  :config
+  (global-corfu-mode)
+  (setq corfu-auto t)
+  :bind (:map corfu-map ("Tab" . corfu-popupinfo-scroll-down)))
 
 (use-package which-key
   :ensure t
