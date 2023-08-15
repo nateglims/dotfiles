@@ -90,6 +90,19 @@
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("PATH"))))
 
+(defun set-vterm-theme (theme)
+  "Set vterm colors so they look more normal."
+  (custom-theme-set-faces
+   theme
+   '(vterm-color-red ((t (:foreground "#db4b4b" :background "#24283b"))))
+   '(vterm-color-green ((t (:foreground "#9ece6a" :background "#24283b"))))
+   '(vterm-color-blue ((t (:foreground "#7aa2f7" :background "#24283b"))))
+   '(vterm-color-cyan ((t (:foreground "#7dcfff" :background "#24283b"))))
+   '(vterm-color-yellow ((t (:foreground "#e0af68" :background "#24283b"))))
+   '(vterm-color-magenta ((t (:foreground "#bb9af7" :background "#24283b"))))
+   '(vterm-color-black ((t (:foreground "#41486" :background "#c0caf5"))))
+   '(vterm-color-white ((t (:foreground "#ffffff" :background "#24283b"))))))
+
 ;; The theme
 (use-package base16-theme
   :config
@@ -97,14 +110,8 @@
     (with-eval-after-load "base16-tokyo-night-dark-theme"
       (custom-theme-set-faces
        'base16-tokyo-night-dark
-       '(selectrum-current-candidate
-        ((t (:background "#48384c"
-                         :weight bold
-                         :foreground "#c678dd"))))
-       '(selectrum-prescient-primary-highlight
-        ((t (:foreground "#da8548"))))
-       '(selectrum-prescient-secondary-highlight
-        ((t (:foreground "#98be65"))))))
+       '(vertico-current ((t (:background "#48384c" :weight bold :foreground "#c678dd")))))
+      (set-vterm-theme 'base16-tokyo-night-dark))
     (load-theme 'base16-tokyo-night-dark t)))
 
 (defun my-vc-off-if-remote ()
