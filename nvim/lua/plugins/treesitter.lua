@@ -12,7 +12,7 @@ return {
 
 	-- Tree Sitter setup
 	require 'nvim-treesitter.configs'.setup {
-	  ensure_installed = { "rust", "go", "typescript", "c", "lua", "zig", "bitbake" },
+	  ensure_installed = { "rust", "go", "typescript", "c", "lua", "zig", "bitbake", "ocaml" },
 	  ignore_install = {},
 	  highlight = {
 	    enable = true,
