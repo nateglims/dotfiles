@@ -9,7 +9,7 @@ set ruler
 
 set ts=4 et sw=4 sts=4
 
-autocmd FileType yaml,lua setlocal ts=2 sts=2 sw=2
+autocmd FileType yaml,lua,nix setlocal ts=2 sts=2 sw=2
 
 if has("win32")
   set mouse=a
