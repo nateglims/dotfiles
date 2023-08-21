@@ -23,8 +23,7 @@
   in {
 
     nixosConfigurations = {
-      # TODO: change hostname
-      nixos = lib.nixosSystem {
+      cybersyn = lib.nixosSystem {
         inherit system;
 
         modules = [
