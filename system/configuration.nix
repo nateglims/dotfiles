@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./sway
     ];
 
   # Bootloader.
@@ -69,12 +70,8 @@
     gcc13
   ];
 
-  programs.sway.enable = true;
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

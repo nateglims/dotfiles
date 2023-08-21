@@ -43,6 +43,8 @@
     # '';
   };
 
+  xdg.configFile."sway/config".source = ./../config/sway/config; 
+
   # You can also manage environment variables but you will have to manually
   # source
   #
