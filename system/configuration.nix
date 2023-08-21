@@ -66,6 +66,7 @@
     neovim
     firefox
     kitty
+    gcc13
   ];
 
   programs.sway.enable = true;

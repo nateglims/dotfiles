@@ -1,18 +1,18 @@
 return {
 	{ 'nvim-treesitter/nvim-treesitter',
 	config = function()
-	local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
-	parser_config.bitbake = {
-	  install_info = {
-	    url = "https://github.com/nateglims/tree-sitter-bb",
-	    files = { "src/parser.c" },
-	    branch = "main",
-	  },
-	}
+--	local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+--	parser_config.bitbake = {
+--	  install_info = {
+--	    url = "https://github.com/nateglims/tree-sitter-bb",
+--	    files = { "src/parser.c" },
+--	    branch = "main",
+--	  },
+--	}
 
 	-- Tree Sitter setup
 	require 'nvim-treesitter.configs'.setup {
-	  ensure_installed = { "rust", "go", "typescript", "c", "lua", "zig", "bitbake", "ocaml" },
+	  ensure_installed = { "rust", "go", "typescript", "c", "lua", "zig", "ocaml" },
 	  ignore_install = {},
 	  highlight = {
 	    enable = true,
