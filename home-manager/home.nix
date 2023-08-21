@@ -44,6 +44,7 @@
   };
 
   xdg.configFile."sway/config".source = ./../config/sway/config; 
+  xdg.configFile."alacritty/alacritty.yml".source = ./../config/alacritty/alacritty.yml; 
 
   # You can also manage environment variables but you will have to manually
   # source
