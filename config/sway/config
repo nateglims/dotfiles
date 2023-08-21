@@ -18,8 +18,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run
-
+set $menu bemenu-run -p "" --tb "#282a36" --hb "#bd93f9" --tf "#f8f8f2" --hf "#44475a" --nf "#f8f8f2"
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
@@ -219,6 +218,8 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+default_border none
 
 include /etc/sway/config.d/*
 
