@@ -1,3 +1,14 @@
-# Dotfiles
+# NixOS Config Flake
 
-It's mostly neovim now.
+## Setup
+
+```
+nixos-rebuild switch --flake .
+
+```
+
+## Update
+
+```
+nix flake update --recreate-lock-file
+```
