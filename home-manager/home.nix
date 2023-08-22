@@ -25,6 +25,10 @@
     fd
     starship
     nerdfonts
+    man-pages
+    man-pages-posix
+    jq
+    unzip
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
