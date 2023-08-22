@@ -51,7 +51,7 @@ colors:
     cyan: '#a4ffff'
     white: '#ffffff'
 
-decorations: none
-opacity: 0.2
+window:
+  opacity: 0.8
 font:
   size: 14
