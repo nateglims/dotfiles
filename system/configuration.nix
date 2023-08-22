@@ -69,11 +69,19 @@
     firefox
     kitty
     gcc13
+    gnomeExtensions.forge
   ];
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  hardware.pulseaudio.enable = false;
 
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-tour
+  ]) ++ (with pkgs.gnome; [
+    gnome-remote-desktop
+  ]);
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
