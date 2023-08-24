@@ -14,18 +14,12 @@
 
 ;; Package management
 (require 'package)
+(require 'use-package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
 
 (package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
 
 (setq backup-directory-alist `(("." . "~/.backups")))
 
@@ -41,8 +35,6 @@
 
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
-
-(global-linum-mode t)
 
 (show-paren-mode 1)
 
@@ -60,6 +52,8 @@
               indent-tabs-mode nil
               tab-always-indent 'complete
               require-final-newline t)
+
+(display-line-numbers-mode)
 
 ;; Font
 (let ((height (if (eq system-type 'darwin) 200 160)))
@@ -121,6 +115,8 @@
 
 ;; General Packages
 
+(use-package vterm)
+
 ;;; Slightly better buffer names
 (use-package uniquify
   :ensure nil
@@ -181,8 +177,6 @@
   (setq tramp-default-method "ssh")
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
-(use-package docker-tramp)
-
 ;; Project.el
 
 (if (version< (number-to-string emacs-major-version) "28")
@@ -242,6 +236,8 @@
 ;; Fancy New Toys
 
 ;;; LSP
+(use-package flycheck)
+
 (use-package eglot
   :hook (eglot--managed-mode-hook . (lambda () (flymake-mode -1))))
 
@@ -266,10 +262,12 @@
   :hook ((rustic-mode . tree-sitter-hl-mode)))
 
 ;; Typescript
+(use-package apheleia)
 (use-package typescript-mode
   :hook ((typescript-mode . eglot-ensure)
          (typescript-mode . tree-sitter-hl-mode)
          (typescript-mode . flycheck-mode)
+         (typescript-mode . apheleia-mode)
          (typescript-mode . (lambda () (flymake-mode -1)))))
 
 ;; Go
