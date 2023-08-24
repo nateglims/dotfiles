@@ -16,6 +16,7 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   networking.hostName = "cybersyn"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -65,6 +66,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    glmark2
     neovim
     firefox
     kitty
@@ -74,9 +76,14 @@
   ];
 
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.opengl.driSupport = true;
+  hardware.opengl.extraPackages = [
+    pkgs.amdvlk
+  ];
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
