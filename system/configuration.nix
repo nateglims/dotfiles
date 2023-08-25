@@ -67,6 +67,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     glmark2
+    glxinfo
     neovim
     firefox
     kitty

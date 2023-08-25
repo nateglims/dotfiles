@@ -52,6 +52,6 @@ colors:
     white: '#ffffff'
 
 window:
-  opacity: 0.8
+  opacity: 0.9
 font:
   size: 14
