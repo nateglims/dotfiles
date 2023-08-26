@@ -14,13 +14,16 @@
 
 ;; Package management
 (require 'package)
-(require 'use-package)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
+;; Disable non-nix pkgs.
+(setq package-archives nil)
+(setq package-enable-at-startup nil)
 
 (package-initialize)
 
+(require 'use-package)
+
+;; Setup a backup directory
 (setq backup-directory-alist `(("." . "~/.backups")))
 
 ;; UI stuff
@@ -118,10 +121,10 @@
 (use-package vterm)
 
 ;;; Slightly better buffer names
-(use-package uniquify
-  :ensure nil
-  :config
-  (setq uniquify-buffer-name-style 'forward))
+;;(use-package uniquify
+;;  :ensure nil
+;;  :config
+;;  (setq uniquify-buffer-name-style 'forward))
 
 ;;; Key-bindings Setup
 
@@ -131,7 +134,7 @@
 
 (use-package meow
   :config
-  (load-file "~/.emacs.d/meow.el")
+  (load-file (concat user-emacs-directory "meow.el"))
   (meow-setup)
   (meow-global-mode))
 
@@ -250,9 +253,8 @@
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
 ;;; Tree Sitter
-(use-package tree-sitter
-  :init (global-tree-sitter-mode))
-(use-package tree-sitter-langs)
+
+
 
 ;; Rust
 (use-package rustic
@@ -286,11 +288,9 @@
 
 (add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
 
- ;; Zig
+;; Zig
 
 (use-package zig-mode)
-
-;; Yocto
 
 ;; Org Mode
 

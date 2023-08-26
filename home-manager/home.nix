@@ -44,6 +44,7 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
   };
 
   xdg.configFile."sway/config".source = ./../config/sway/config; 
@@ -75,6 +76,7 @@
   imports = [
     ./neovim.nix
     ./fish.nix
+    ./emacs.nix
   ];
 
   programs.tmux = {
