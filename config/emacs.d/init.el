@@ -63,7 +63,7 @@
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
-(let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono" "Cascadia Code")))
+(let ((font-list '("FiraCode Nerd Font Mono" "Inconsolata")))
   (dolist (font font-list)
     (if (find-font (font-spec :name font))
         (set-frame-font font nil t)
