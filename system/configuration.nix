@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./sway
       ./steam.nix
     ];
 
@@ -72,13 +71,16 @@
     firefox
     kitty
     gcc13
-    gnomeExtensions.forge
+   # gnomeExtensions.forge
     gnome.gnome-tweaks
+    alacritty
+    dracula-theme
   ];
 
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.opengl.driSupport = true;
@@ -112,8 +114,26 @@
 	[org.gnome.desktop.interface]
 	gtk-theme='Dracula'
 	icon-theme='Dracula'
-'';
+  '';
 
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+
+  services.dbus.enable = true;
+
+  fonts = {
+    fonts = with pkgs; [
+      nerdfonts
+    ];
+    fontconfig.defaultFonts = {
+      serif = ["FireCode"];
+      sansSerif = ["FiraCode"];
+      monospace = ["FiraMono"];
+    };
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

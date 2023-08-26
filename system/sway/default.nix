@@ -48,13 +48,10 @@ in
 # Sway Configuration
 
   environment.systemPackages = with pkgs; [
-    alacritty
 		dbus-sway-environment
-		configure-gtk
     wayland
     xdg-utils
     glib
-    dracula-theme
     gnome.adwaita-icon-theme
     swaylock
     swayidle
@@ -84,15 +81,5 @@ in
     wrapperFeatures.gtk = true;
   };
 
-  fonts = {
-    fonts = with pkgs; [
-      nerdfonts
-    ];
-    fontconfig.defaultFonts = {
-      serif = ["FireCode"];
-      sansSerif = ["FiraCode"];
-      monospace = ["FiraMono"];
-    };
-  };
 }
 
