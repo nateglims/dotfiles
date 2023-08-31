@@ -29,6 +29,7 @@
     man-pages-posix
     jq
     unzip
+    gimp-with-plugins
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
