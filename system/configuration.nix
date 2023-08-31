@@ -87,6 +87,7 @@
   hardware.opengl.extraPackages = [
     pkgs.amdvlk
   ];
+  environment.variables.AMD_VULKAN_ICD = "RADV";
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
@@ -134,6 +135,9 @@
       monospace = ["FiraMono"];
     };
   };
+
+  programs.fish.enable = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
