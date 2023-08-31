@@ -8,7 +8,6 @@
     epkgs.exec-path-from-shell
     epkgs.base16-theme
     epkgs.vterm
-#    epkgs.uniquify
     epkgs.undo-tree
     epkgs.meow
     epkgs.orderless
@@ -16,7 +15,6 @@
     epkgs.corfu
     epkgs.which-key
     epkgs.vertico
-#    epkgs.tramp
     epkgs.project
     epkgs.paredit
     epkgs.rainbow-delimiters
@@ -27,14 +25,13 @@
     epkgs.cider
     epkgs.flycheck
     epkgs.eglot
-#    epkgs.tree-sitter
-    epkgs.tree-sitter-langs
     epkgs.rustic
     epkgs.apheleia
     epkgs.typescript-mode
     epkgs.go-mode
     epkgs.zig-mode
     epkgs.org
+    epkgs.nix-mode
   ];
 
   services.emacs.enable = true;

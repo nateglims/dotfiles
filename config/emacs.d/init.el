@@ -292,6 +292,8 @@
 
 (use-package zig-mode)
 
+(use-package nix-mode)
+
 ;; Org Mode
 
 (use-package org
