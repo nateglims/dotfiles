@@ -27,6 +27,11 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  fileSystems."/home" = {
+    device = "/dev/hdd_vg/home";
+    fsType = "ext4";
+  };
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
@@ -71,10 +76,10 @@
     firefox
     kitty
     gcc13
-   # gnomeExtensions.forge
     gnome.gnome-tweaks
     alacritty
     dracula-theme
+    lvm2
   ];
 
   services.xserver.enable = true;
