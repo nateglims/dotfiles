@@ -55,7 +55,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip', option = { show_autosnippets = true } },
-    { name = "neorg" },
   }, {
     { name = 'buffer' },
   })
