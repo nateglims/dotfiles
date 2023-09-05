@@ -1,13 +1,21 @@
+-- Move these out of vimscript over time...
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+vim.opt.colorcolumn = "80"
+
+vim.opt.hidden = true
+
+vim.opt.tabstop = 4
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+
 vim.cmd([[
 set encoding=utf-8
 
 set termguicolors
 highlight Comment cterm=italic
-
-set number
-set ruler
-
-set ts=4 et sw=4 sts=4
 
 autocmd FileType yaml,lua,nix setlocal ts=2 sts=2 sw=2
 
@@ -16,7 +24,6 @@ if has("win32")
   source $VIMRUNTIME/mswin.vim
 endif
 
-set hidden
 set nobackup
 set nowritebackup
 set signcolumn=yes
@@ -33,3 +40,4 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 ]])
+
