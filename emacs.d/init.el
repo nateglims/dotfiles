@@ -12,12 +12,17 @@
   (write-region "" "" custom-file))
 (load custom-file)
 
+(setq use-package-always-ensure t)
+
 ;; Package management
 (require 'package)
 (require 'use-package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
+
+(when (not package-archive-contents)
+  (package-refresh-contents))
 
 (package-initialize)
 
