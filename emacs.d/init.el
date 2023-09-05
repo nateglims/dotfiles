@@ -122,12 +122,6 @@
 
 (use-package vterm)
 
-;;; Slightly better buffer names
-(use-package uniquify
-  :ensure nil
-  :config
-  (setq uniquify-buffer-name-style 'forward))
-
 ;;; Key-bindings Setup
 
 (use-package undo-tree
