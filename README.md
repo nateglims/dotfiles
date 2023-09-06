@@ -1,3 +1,6 @@
 # Dotfiles
 
-It's mostly neovim now.
+```
+ln -s $(pwd) $HOME/.config/$(basename $(pwd))
+```
+
