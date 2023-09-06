@@ -4,7 +4,7 @@ return {
       local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
       -- Tree Sitter setup
       require 'nvim-treesitter.configs'.setup {
-        ensure_installed = { "rust", "go", "typescript", "c", "lua", "zig", "ocaml" },
+        ensure_installed = { "rust", "go", "typescript", "c", "lua", "bitbake" },
         ignore_install = {},
         highlight = {
           enable = true,
