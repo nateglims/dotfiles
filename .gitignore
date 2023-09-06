@@ -1,3 +1,5 @@
 nvim/plugin
 *.~undo-tree~
 emacs.d/history
+tmux/plugins
+fish/fish_variables
