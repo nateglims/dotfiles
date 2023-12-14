@@ -61,7 +61,7 @@
 (display-line-numbers-mode)
 
 ;; Font
-(let ((height (if (eq system-type 'darwin) 200 160)))
+(let ((height (if (eq system-type 'darwin) 200 200)))
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
@@ -130,7 +130,7 @@
 
 (use-package meow
   :config
-  (load-file "~/.emacs.d/meow.el")
+  (load-file (expand-file-name "meow.el" user-emacs-directory))
   (meow-setup)
   (meow-global-mode))
 
@@ -149,9 +149,8 @@
 
 (use-package corfu
   :ensure t
-  :config
+  :init
   (global-corfu-mode)
-  (setq corfu-auto t)
   :bind (:map corfu-map ("Tab" . corfu-popupinfo-scroll-down)))
 
 (use-package which-key
@@ -162,6 +161,7 @@
 (use-package vertico
   :ensure t
   :bind (:map vertico-map
+              ("TAB" . minibuffer-complete)
               ("C-n" . vertico-next)
               ("C-p" . vertico-previous)
               :map minibuffer-local-map
@@ -232,9 +232,7 @@
 (setq-default sh-basic-offset 2)
 (setq-default sh-indentation 2)
 
-;; Fancy New Toys
-
-;;; LSP
+;;; LSP, etc.
 (use-package flycheck)
 
 (use-package eglot
@@ -249,9 +247,20 @@
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
 ;;; Tree Sitter
-(use-package tree-sitter
-  :init (global-tree-sitter-mode))
-(use-package tree-sitter-langs)
+(require 'treesit)
+
+(setq treesit-language-source-alist
+      '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")))
+
+(defun install-treesit-grammars ()
+  (interactive)
+  (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+;; 1) try treesit-language-available-p
+;; 2) add more langs
+;; 3) Setup ts hooks
 
 ;; Rust
 (use-package rustic
@@ -262,12 +271,8 @@
 
 ;; Typescript
 (use-package apheleia)
-(use-package typescript-mode
-  :hook ((typescript-mode . eglot-ensure)
-         (typescript-mode . tree-sitter-hl-mode)
-         (typescript-mode . flycheck-mode)
-         (typescript-mode . apheleia-mode)
-         (typescript-mode . (lambda () (flymake-mode -1)))))
+
+;;; TODO: Hook in eglot and typescript-ts-mode.
 
 ;; Go
 (use-package go-mode)
