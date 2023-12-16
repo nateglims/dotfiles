@@ -62,7 +62,7 @@
 (display-line-numbers-mode)
 
 ;; Font
-(let ((height (if (eq system-type 'darwin) 200 200)))
+(let ((height (if (eq system-type 'darwin) 160 200)))
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
