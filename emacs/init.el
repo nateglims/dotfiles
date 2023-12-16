@@ -122,6 +122,7 @@
 ;; General Packages
 
 (use-package vterm)
+(use-package magit)
 
 ;;; Key-bindings Setup
 
