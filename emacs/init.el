@@ -16,15 +16,16 @@
 
 ;; Package management
 (require 'package)
-(require 'use-package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
 
-(when (not package-archive-contents)
+(package-initialize)
+
+(unless package-archive-contents
   (package-refresh-contents))
 
-(package-initialize)
+(require 'use-package)
 
 (setq backup-directory-alist `(("." . "~/.backups")))
 
