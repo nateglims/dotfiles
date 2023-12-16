@@ -244,15 +244,11 @@
     (message "$HOME is null.")))
 
 ;; Shell
+
 (setq-default sh-basic-offset 2)
 (setq-default sh-indentation 2)
 
 ;;; LSP, etc.
-(use-package flycheck)
-
-(use-package eglot
-  :hook (eglot--managed-mode-hook . (lambda () (flymake-mode -1))))
-
 (setq-default eglot-workspace-configuration
     '((:gopls .
         ((staticcheck . t)
@@ -261,6 +257,8 @@
 (defun eglot-format-buffer-on-save ()
   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
+(add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend)
+
 ;;; Tree Sitter
 (require 'treesit)
 
@@ -268,26 +266,42 @@
       '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-        (json "https://github.com/tree-sitter/tree-sitter-json")))
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust" "master" "src")
+        (toml "https://github.com/ikatyang/tree-sitter-toml" "master" "src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml" "master" "src")
+        (python "https://github.com/tree-sitter/tree-sitter-python" "master" "src")
+        (bash "https://github.com/tree-sitter/tree-sitter-bash" "master" "src")))
 
 (defun install-treesit-grammars ()
   (interactive)
   (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
-;; 1) try treesit-language-available-p
-;; 2) add more langs
-;; 3) Setup ts hooks
+
+;; 1) try treesit-language-available-p (maybe)
+;; 2) add more langs: Go
+
+;;; Python
+
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)))
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
 
 ;; Rust
-(use-package rustic
-  :config (progn
-            (setq rustic-lsp-client 'eglot)
-            (add-hook 'rustic-mode (lambda () (flymake-mode -1))))
-  :hook ((rustic-mode . tree-sitter-hl-mode)))
+
+(require 'rust-ts-mode)
+
+(use-package cargo
+  :config
+  (add-hook 'rust-ts-mode-hook #'cargo-minor-mode))
+
+(add-hook 'rust-ts-mode-hook #'eglot-ensure)
+
 
 ;; Typescript
 (use-package apheleia)
 
-;;; TODO: Hook in eglot and typescript-ts-mode.
+(require 'typescript-ts-mode)
+(add-hook 'typescript-ts-mode-hook #'eglot-ensure)
 
 ;; Go
 (use-package go-mode)
