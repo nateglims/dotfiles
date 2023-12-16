@@ -165,10 +165,24 @@
               ("TAB" . minibuffer-complete)
               ("C-n" . vertico-next)
               ("C-p" . vertico-previous)
-              :map minibuffer-local-map
-              ("C-w" . backward-kill-word))
+              ;:map minibuffer-local-map
+              ;("C-w" . backward-kill-word)
+              )
   :init  (vertico-mode)
   :custom (vertico-cycle t))
+
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+              ("TAB" . vertico-directory-enter)
+              ("C-j" . vertico-directory-enter)
+              ("C-l" . vertico-directory-delete-word)
+              ("C-w" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package consult
+  :ensure t)
 
 ;; Tramp
 
