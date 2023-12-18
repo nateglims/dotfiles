@@ -119,6 +119,25 @@
       (setq-local vc-handled-backends nil)))
 (add-hook 'find-file-hook 'my-vc-off-if-remote)
 
+(require 'flymake)
+(custom-set-faces
+ '(flymake-note
+   ((t :inverse-video nil
+       :weight bold
+       :slant oblique
+       :underline (:position t))))
+ '(flymake-warning
+  ((t :inverse-video t
+      :slant oblique
+      :weight bold
+      :foreground "#e0af68"
+      :underline (:position t))))
+ '(flymake-error
+  ((t :inverse-video t
+      :slant oblique
+      :foreground "#db4b4b"
+      :weight bold))))
+
 ;; General Packages
 
 (use-package vterm)
