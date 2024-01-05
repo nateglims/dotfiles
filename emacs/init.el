@@ -138,6 +138,8 @@
       :foreground "#db4b4b"
       :weight bold))))
 
+(use-package svg-lib)
+
 ;; General Packages
 
 (use-package vterm)
