@@ -1,7 +1,7 @@
 fish_config theme choose "Dracula Official"
 
-if command -v exa > /dev/null
-    alias ls="exa"
+if command -v eza > /dev/null
+    alias ls="eza"
 end
 
 if command -v starship > /dev/null
