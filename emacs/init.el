@@ -355,12 +355,13 @@
    ("C-c C-o a" . org-agenda)
    ("C-c C-o c" . org-capture))
   :config
+  (add-hook 'org-mode-hook 'turn-on-font-lock)
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
            "* TODO %?\n %i\n %a")
-      ("j" "Journal" entry (file+datetree "~/.org/journal.org")
-       "* %?\nEntered on %U\n %i\n %a")
-      ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
-       "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
+          ("j" "Journal" entry (file+datetree "~/.org/journal.org")
+           "* %?\nEntered on %U\n %i\n %a")
+          ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
+           "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
 
 ;;; init.el ends here
