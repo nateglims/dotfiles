@@ -1,12 +1,12 @@
 vim.g.vimwiki_list = {
   {
-    path = '~/Amazon WorkDocs Drive/My Documents/wiki/',
+    path = '~/WorkDocs/wiki/',
     name = 'My Wiki',
   }
 }
 vim.g.vimwiki_global_ext = 0
 
-local export_path = '~/Amazon WorkDocs Drive/My Documents/generated'
+local export_path = '~/WorkDocs/generated'
 
 local M = {}
 local api = vim.api
@@ -28,7 +28,7 @@ function M.ConvertToDocx()
       '--to=docx',
       '--from=vimwiki',
       '--number-sections',
-      '--highlight-style=/Users/glimsdal/Amazon WorkDocs Drive/My Documents/syntax-highlight.theme',
+      '--highlight-style=/Users/glimsdal/WorkDocs/syntax-highlight.theme',
       '--reference-doc=/Users/glimsdal/Amazon WorkDocs Drive/My Documents/custom-reference.docx',
     },
     cwd = Path:new(export_path):normalize(),
@@ -44,8 +44,6 @@ function M.ConvertToDocx()
       print(line)
     end
   }):sync()
-
-
 end
 
 function M.ConvertToWiki()
@@ -62,7 +60,6 @@ function M.ConvertToWiki()
       print(return_val)
     end,
   }):sync()
-
 end
 
 return M
