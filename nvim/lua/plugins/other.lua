@@ -23,5 +23,18 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     }
-  }
+  },
+  {
+    "nvim-neorg/neorg",
+    ft = 'norg',
+    cmd = 'Neorg',
+    build = ":Neorg sync-parser",
+    config = function()
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {},
+        },
+      }
+    end,
+  },
 }
