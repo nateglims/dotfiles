@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [[ -z $1 ]] ; then
+    root=$(fd --exact-depth 1 --type d --search-path ~/Projects | fzf)
+else
+    root=$1
+fi
+
+session=$(basename $root)
+    
+if [[ -z $TMUX ]] ; then
+    tmux new-session -s $session -c $root
+    tmux attach-session -t $session
+else
+    tmux new-session -ds $session -c $root
+    tmux switch-client -t $session
+fi
+
