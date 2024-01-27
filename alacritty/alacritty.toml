@@ -1,10 +1,10 @@
-import = ["/home/nathan/.config/alacritty/dracula.toml"]
+import = ["~/.config/alacritty/tokyo-night.toml"]
 
 [env]
 TERM = "alacritty"
 
 [font]
-size = 18.0
+size = 20.0
 
 [font.bold]
 style = "Bold"
