@@ -14,3 +14,12 @@ else
         echo (pwd) '>' (set_color normal)
     end
 end
+
+if command -v brazil-build > /dev/null
+    alias bb="brazil-build"
+    alias bbr="brazil-build release"
+end
+
+if command -v brazil > /dev/null
+    alias bw="brazil ws"
+end
