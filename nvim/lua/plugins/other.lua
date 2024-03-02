@@ -33,6 +33,19 @@ return {
       require('neorg').setup {
         load = {
           ['core.defaults'] = {},
+          ['core.concealer'] = {},
+          ['core.integrations.treesitter'] = {},
+          ['core.export'] = {},
+          ['core.export.markdown'] = {
+            config = { extensions = "all" },
+          },
+          ['core.dirman'] = {
+            config = {
+              workspaces = {
+                notes = "~/WorkDocs/notes",
+              },
+            },
+          },
         },
       }
     end,
