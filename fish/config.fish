@@ -23,3 +23,6 @@ end
 if command -v brazil > /dev/null
     alias bw="brazil ws"
 end
+
+alias cdg="cdk --profile glimsdal"
+alias cdo="cdk --profile glimsdal-old"
