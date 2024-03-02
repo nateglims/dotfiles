@@ -233,8 +233,8 @@
 
 (use-package slime
   :config
-  (setq inferior-lisp-program "sbcl")
-  (setq slime-contribs '(slime-fancy))
+  (setq inferior-lisp-program "ros -Q run")
+  (setq slime-contribs '(slime-fancy slime-asdf slime-quicklisp))
   (add-hook 'slime-mode-hook 'start-slime))
 
 ;; Clojure
