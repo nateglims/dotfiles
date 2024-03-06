@@ -24,11 +24,15 @@ return {
       -- refer to the configuration section below
     }
   },
+  { "folke/zen-mode.nvim" },
   {
     "nvim-neorg/neorg",
     ft = 'norg',
     cmd = 'Neorg',
     build = ":Neorg sync-parser",
+    keys = {
+      { '<Leader>cc', '<cmd>Neorg toggle-concealer<CR>', desc = "Toggle concealer" },
+    },
     config = function()
       require('neorg').setup {
         load = {
@@ -36,6 +40,11 @@ return {
           ['core.concealer'] = {},
           ['core.integrations.treesitter'] = {},
           ['core.export'] = {},
+          ['core.presenter'] = {
+            config = {
+              zen_mode = "zen-mode",
+            },
+          },
           ['core.export.markdown'] = {
             config = { extensions = "all" },
           },
