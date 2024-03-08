@@ -12,6 +12,13 @@ return {
     ft = "rust",
   },
   {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
+  {
+    'mfussenegger/nvim-lint',
+  },
+  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     init = function()

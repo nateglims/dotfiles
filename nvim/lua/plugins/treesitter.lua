@@ -1,10 +1,12 @@
 return {
-  { 'nvim-treesitter/nvim-treesitter',
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ":TSUpdate",
     config = function()
-      local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
-      -- Tree Sitter setup
-      require 'nvim-treesitter.configs'.setup {
-        ensure_installed = { "rust", "go", "gomod", "yaml", "python", "typescript", "c", "lua", "bitbake" },
+      local configs = require('nvim-treesitter.configs')
+
+      configs.setup({
+        ensure_installed = { "rust", "go", "gomod", "yaml", "python", "typescript", "c", "lua", "bitbake", "java" },
         ignore_install = {},
         highlight = {
           enable = true,
@@ -28,7 +30,7 @@ return {
             show_help = '?',
           },
         },
-      }
+      })
     end
   },
   'nvim-treesitter/playground',
