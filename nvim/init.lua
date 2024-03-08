@@ -15,7 +15,4 @@ require("lazy").setup('plugins')
 
 require('keymaps')
 require('config')
-require('language/lua')
-require('language/rust')
-require('language/go')
-require('language/python')
+require('cmp-setup')

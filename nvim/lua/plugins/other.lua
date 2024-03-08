@@ -7,10 +7,11 @@ return {
     'ray-x/go.nvim',
     ft = "go",
   },
-  {
-    'simrat39/rust-tools.nvim',
-    ft = "rust",
-  },
+  --{
+  --  'mrcjkb/rustaceanvim',
+  --  version = '^4', -- Recommended
+  --  ft = { 'rust' },
+  --},
   {
     'stevearc/conform.nvim',
     opts = {},
