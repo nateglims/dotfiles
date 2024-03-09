@@ -1,6 +1,3 @@
-local lsp = require('lsp')
-lsp.setup_lsp('pyright')
-
 require("conform").formatters_by_ft.python = { "isort", "black" }
 require('lint').linters_by_ft.python = { 'flake8' }
 

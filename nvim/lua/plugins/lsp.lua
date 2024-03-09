@@ -1,6 +1,10 @@
 return {
   --
-  'neovim/nvim-lspconfig',
+  {
+    'neovim/nvim-lspconfig',
+    --    event = { "BufReadPost", "BufNewFile" },
+    --    cmd = { "LspInfo", "LspInstall", "LspUninstall" },
+  },
   'nvim-lua/lsp_extensions.nvim',
   {
     'L3MON4D3/LuaSnip',
