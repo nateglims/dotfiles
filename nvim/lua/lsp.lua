@@ -1,4 +1,7 @@
 local nvim_lsp = require('lspconfig')
+
+require('lspconfig.ui.windows').default_options.border = 'single'
+
 local M = {}
 
 -- Use an on_attach function to only map the following keys
