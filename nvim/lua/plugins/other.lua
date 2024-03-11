@@ -32,4 +32,10 @@ return {
       -- refer to the configuration section below
     }
   },
+  {
+    'mfussenegger/nvim-jdtls'
+  },
+  {
+    'mfussenegger/nvim-dap'
+  },
 }
