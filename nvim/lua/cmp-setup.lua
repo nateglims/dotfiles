@@ -2,7 +2,7 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 
 
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets" })
 
 luasnip.config.set_config({
@@ -23,11 +23,11 @@ cmp.setup({
     end,
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping.complete_common_string(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -55,6 +55,7 @@ cmp.setup({
     { name = 'luasnip', option = { show_autosnippets = true } },
   }, {
     { name = 'buffer' },
+    { name = 'path' },
   })
 })
 

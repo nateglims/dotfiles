@@ -6,7 +6,7 @@ return {
       local configs = require('nvim-treesitter.configs')
 
       configs.setup({
-        ensure_installed = { "rust", "go", "gomod", "yaml", "python", "typescript", "c", "lua", "bitbake", "java" },
+        ensure_installed = { "cmake", "rust", "go", "gomod", "yaml", "python", "typescript", "c", "lua", "bitbake", "java" },
         ignore_install = {},
         highlight = {
           enable = true,
