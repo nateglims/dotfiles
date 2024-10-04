@@ -30,6 +30,13 @@ local config = {
   init_options = {
     workspaceFolders = ws_folders_jdtls,
   },
+  settings = {
+    java = {
+      signatureHelp = { enabled = true },
+      referencesCodeLens = { enabled = true },
+      implementationsCodeLens = { enabled = true },
+    },
+  },
 }
 
 jdtls.start_or_attach(config)
