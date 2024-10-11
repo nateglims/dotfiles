@@ -24,5 +24,9 @@ if command -v brazil > /dev/null
     alias bw="brazil ws"
 end
 
+if command -v git > /dev/null
+    alias gsc="git show --color --pretty=format:%b"
+end
+
 alias cdg="cdk --profile glimsdal"
 alias cdo="cdk --profile glimsdal-old"
