@@ -5,6 +5,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-telescope/telescope-dap.nvim',
     },
     config = function()
       local opts = { noremap = true, silent = true }
@@ -27,6 +28,7 @@ return {
       }
 
       telescope.load_extension("ui-select")
+      telescope.load_extension("dap")
     end
   },
 }
