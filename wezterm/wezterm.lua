@@ -26,6 +26,11 @@ config.keys = {
     mods = 'CTRL',
     action = wezterm.action.ActivateKeyTable { name = 'tmux_like', timeout_millisecond = 1000 },
   },
+  {
+    key = 'f',
+    mods = 'ALT',
+    action = wezterm.action.TogglePaneZoomState,
+  },
 }
 
 config.key_tables = {
@@ -54,7 +59,11 @@ config.key_tables = {
     },
     {
       key = 'x',
-      action = wezterm.action.CloseCurrentTab { confirm = true },
+      action = wezterm.action.CloseCurrentPane { confirm = true },
+    },
+    {
+      key = 'o',
+      action = wezterm.action.ActivatePaneDirection('Next'),
     },
   },
 }
