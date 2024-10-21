@@ -1,6 +1,20 @@
 local wezterm = require 'wezterm'
 local config = {}
 
+config.tab_bar_at_bottom = true
+config.colors = {
+  tab_bar = {
+    active_tab = {
+      fg_color = '#48384c',
+      bg_color = '#c678dd',
+    },
+    inactive_tab = {
+      fg_color = '#c678dd',
+      bg_color = '#48384c',
+    }
+  }
+}
+
 wezterm.on('update-right-status', function(window, pane)
   local name = window:active_key_table()
   if name then
@@ -15,56 +29,91 @@ config.font = wezterm.font('FiraCode Nerd Font Mono')
 
 if wezterm.target_triple == 'x86_64-unknown-linux-gnu' then
   config.font_size = 16
+  config.window_frame = {
+    font_size = 16.0,
+  }
 else
-  config.font_size = 20
+  config.font_size = 22.0
+  config.window_frame = {
+    font_size = 16.0,
+  }
 end
 
--- config.leader = { key = 'a', mods = 'CTRL', timeout_millisecond = 1000 }
+config.leader = { key = ' ', mods = 'CTRL', timeout_millisecond = 1000 }
 config.keys = {
-  {
-    key = 'a',
-    mods = 'CTRL',
-    action = wezterm.action.ActivateKeyTable { name = 'tmux_like', timeout_millisecond = 1000 },
-  },
   {
     key = 'f',
     mods = 'ALT',
     action = wezterm.action.TogglePaneZoomState,
   },
+  {
+    key = '"',
+    mods = 'LEADER|SHIFT',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = '%',
+    mods = 'LEADER|SHIFT',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'c',
+    mods = 'LEADER',
+    action = wezterm.action.SpawnTab('CurrentPaneDomain'),
+  },
+  {
+    key = 'n',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateTabRelative(1),
+  },
+  {
+    key = 'p',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateTabRelative(-1),
+  },
+  {
+    key = 'x',
+    mods = 'LEADER',
+    action = wezterm.action.CloseCurrentPane { confirm = true },
+  },
+  {
+    key = 'o',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection('Next'),
+  },
+  {
+    key = 'l',
+    mods = 'LEADER',
+    action = wezterm.action.ShowLauncherArgs { flags = 'WORKSPACES' },
+  },
+  {
+    key = 'a',
+    mods = 'LEADER',
+    action = wezterm.action.AttachDomain 'unix',
+  },
+  {
+    key = 'd',
+    mods = 'LEADER',
+    action = wezterm.action.DetachDomain { DomainName = 'unix' },
+  },
+  {
+    key = 'b',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(window, pane)
+      local overrides = window:get_config_overrides() or {}
+      if not overrides.color_scheme then
+        overrides.color_scheme = 'Solar Flare Light (base16)'
+      else
+        overrides.color_scheme = nil
+      end
+      window:set_config_overrides(overrides)
+    end)
+  },
 }
 
-config.key_tables = {
-  tmux_like = {
-    {
-      key = '"',
-      mods = 'SHIFT',
-      action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = '%',
-      mods = 'SHIFT',
-      action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = 'c',
-      action = wezterm.action.SpawnTab('CurrentPaneDomain'),
-    },
-    {
-      key = 'n',
-      action = wezterm.action.ActivateTabRelative(1),
-    },
-    {
-      key = 'p',
-      action = wezterm.action.ActivateTabRelative(-1),
-    },
-    {
-      key = 'x',
-      action = wezterm.action.CloseCurrentPane { confirm = true },
-    },
-    {
-      key = 'o',
-      action = wezterm.action.ActivatePaneDirection('Next'),
-    },
+config.unix_domains = {
+  {
+    name = 'unix',
   },
 }
 
