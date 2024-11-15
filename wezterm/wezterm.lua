@@ -15,12 +15,32 @@ config.colors = {
   }
 }
 
+
+local function tab_title(tab_info)
+  local title = tab_info.tab_title
+
+  if title and #title > 0 then
+    return title
+  end
+
+  return tab_info.active_pane.title
+end
+
 wezterm.on('update-right-status', function(window, pane)
   local name = window:active_key_table()
   if name then
     name = 'TABLE: ' .. name
   end
   window:set_right_status(name or '')
+end)
+
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local title = tab_title(tab)
+  if tab.is_active then
+    return {
+      { Text = ' ' .. title .. ' ' },
+    }
+  end
 end)
 
 config.color_scheme = 'Tokyo Night'
@@ -108,6 +128,18 @@ config.keys = {
       end
       window:set_config_overrides(overrides)
     end)
+  },
+  {
+    key = 'r',
+    mods = 'LEADER|SHIFT',
+    action = wezterm.action.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end)
+    },
   },
 }
 
