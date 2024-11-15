@@ -1,4 +1,5 @@
-fish_config theme choose "Dracula Official"
+# fish_config theme choose "Dracula Official"
+# fish_config theme choose Tomorrow
 
 if command -v eza > /dev/null
     alias ls="eza"
@@ -17,7 +18,10 @@ end
 
 if command -v brazil-build > /dev/null
     alias bb="brazil-build"
-    alias bbr="brazil-build release"
+
+    alias brc="brazil-recursive-cmd"
+    alias bbb="brc --allPackages brazil-build release"
+    alias bbr="brc brazil-build release"
 end
 
 if command -v brazil > /dev/null
