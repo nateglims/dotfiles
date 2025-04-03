@@ -1,18 +1,5 @@
 return {
   {
-    'othree/xml.vim',
-    ft = "xml",
-  },
-  {
-    'ray-x/go.nvim',
-    ft = "go",
-  },
-  --{
-  --  'mrcjkb/rustaceanvim',
-  --  version = '^4', -- Recommended
-  --  ft = { 'rust' },
-  --},
-  {
     'stevearc/conform.nvim',
     opts = {},
   },

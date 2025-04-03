@@ -15,5 +15,3 @@ require("lazy").setup('plugins')
 
 require('keymaps')
 require('config')
-require('cmp-setup')
-require('lsp')

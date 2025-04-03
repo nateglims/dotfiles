@@ -17,6 +17,7 @@ return {
       set_keymap('n', '<Leader>S', ':Telescope lsp_workspace_symbols<CR>', opts)
       set_keymap('n', '<Leader>n', ':Telescope find_files previewer=false<CR>', opts)
       set_keymap('n', '<Leader>b', ':Telescope buffers<CR>', opts)
+      set_keymap('n', '<Leader>h', ':Telescope help_tags<CR>', opts)
 
       local telescope = require('telescope')
       telescope.setup {
@@ -29,6 +30,8 @@ return {
 
       telescope.load_extension("ui-select")
       telescope.load_extension("dap")
+      telescope.load_extension("fzf")
     end
   },
+  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 }
