@@ -25,4 +25,15 @@ return {
   {
     'mfussenegger/nvim-dap'
   },
+  {
+    "saghen/blink.cmp",
+    version = "1.*",
+    opts_extend = { "sources.default" },
+    opts = {
+      keymap = {
+        preset = "default",
+        ["<CR>"] = { "select_and_accept" },
+      },
+    },
+  },
 }
