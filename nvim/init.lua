@@ -16,8 +16,11 @@ require('keymaps')
 require('config')
 
 vim.lsp.enable({
+  'typescript-language-server',
   'lua-language-server',
   'rust-analyzer',
+  'pyright',
   'clangd',
+  'gopls',
   'zls',
 })

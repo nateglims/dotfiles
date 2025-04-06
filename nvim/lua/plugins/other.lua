@@ -31,8 +31,7 @@ return {
     opts_extend = { "sources.default" },
     opts = {
       keymap = {
-        preset = "default",
-        ["<CR>"] = { "select_and_accept" },
+        preset = "enter",
       },
     },
   },

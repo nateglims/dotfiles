@@ -52,4 +52,4 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   end
 })
 
-vim.o.winborder = 'rounded'
+-- vim.o.winborder = 'rounded'
