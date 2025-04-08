@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Show a diagnostic if the cursor is over it.
 vim.o.updatetime = 250
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+vim.api.nvim_create_autocmd({ "CursorHold" }, {
   group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
   callback = function()
     local opts = {
