@@ -4,9 +4,6 @@ return {
     opts = {},
   },
   {
-    'mfussenegger/nvim-lint',
-  },
-  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     init = function()
@@ -20,10 +17,10 @@ return {
     }
   },
   {
-    'mfussenegger/nvim-jdtls'
+    'mfussenegger/nvim-lint',
   },
   {
-    'mfussenegger/nvim-dap'
+    'mfussenegger/nvim-jdtls'
   },
   {
     "saghen/blink.cmp",

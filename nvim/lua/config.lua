@@ -53,3 +53,4 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
 })
 
 -- vim.o.winborder = 'rounded'
+vim.lsp.set_log_level('debug')
