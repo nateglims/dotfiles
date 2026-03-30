@@ -4,7 +4,7 @@
 
 ;; This is just my dotfile stuff.
 
-;;; Code:
+;; Code:
 
 ;; Setup a custom file so it doesn't get added here.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -62,7 +62,7 @@
 (display-line-numbers-mode)
 
 ;; Font
-(let ((height (if (eq system-type 'darwin) 160 200)))
+(let ((height (if (eq system-type 'darwin) 200 200)))
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
@@ -142,7 +142,7 @@
 
 ;; General Packages
 
-(use-package vterm)
+;; (use-package vterm)
 (use-package magit)
 
 ;;; Key-bindings Setup
@@ -351,17 +351,20 @@
 
 (use-package org
   :bind
-  (("C-c C-o l" . org-store-link)
-   ("C-c C-o a" . org-agenda)
-   ("C-c C-o c" . org-capture))
+  (("C-c l l" . org-store-link)
+   ("C-c l a" . org-agenda)
+   ("C-c l c" . org-capture))
   :config
-  (add-hook 'org-mode-hook 'turn-on-font-lock)
+  (setq org-agenda-files '("~/.org/")
+        org-log-done 'time)
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/.org/tasks.org" "Tasks")
            "* TODO %?\n %i\n %a")
           ("j" "Journal" entry (file+datetree "~/.org/journal.org")
            "* %?\nEntered on %U\n %i\n %a")
           ("m" "Meeting" entry (file+headline "~/.org/notes/work.org" "Meetings")
-           "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1))))
+           "* MEETING: with %?\n" :clock-in t :clock-resume t :empty-lines 1)
+          ("i" "Issue" entry (file+headline "~/.org/issues.org" "Issues")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a"))))
 
 ;;; init.el ends here
