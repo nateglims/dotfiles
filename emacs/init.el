@@ -142,7 +142,8 @@
 
 ;; General Packages
 
-;; (use-package vterm)
+;; For MacOS: `brew install libvterm cmake`
+(use-package vterm)
 (use-package magit)
 
 ;;; Key-bindings Setup
