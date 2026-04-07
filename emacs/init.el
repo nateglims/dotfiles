@@ -66,10 +66,11 @@
   (set-face-attribute 'default nil :height height)
   (set-face-attribute 'mode-line nil :height height))
 
-(let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono" "Cascadia Code")))
-  (dolist (font font-list)
+(let ((font-list '("Inconsolata" "MesloLGL Nerd Font Mono" "Cascadia Code" "FiraCode Nerd Font Mono")))
+  (cl-dolist (font font-list)
     (if (find-font (font-spec :name font))
-        (set-frame-font font nil t)
+        (progn (message "Found %s." font)
+               (cl-return (set-frame-font font nil t)))
       (message "%s not found." font))))
 
 ;; Clipboard
@@ -283,8 +284,6 @@
 (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend)
 
 ;;; Tree Sitter
-(require 'treesit)
-
 (setq treesit-language-source-alist
       '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
@@ -294,12 +293,22 @@
         (toml "https://github.com/ikatyang/tree-sitter-toml" "master" "src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml" "master" "src")
         (python "https://github.com/tree-sitter/tree-sitter-python" "master" "src")
+        (java "https://github.com/tree-sitter/java-tree-sitter" "master" "src")
         (bash "https://github.com/tree-sitter/tree-sitter-bash" "master" "src")))
 
 (defun install-treesit-grammars ()
   (interactive)
   (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
 
+(let* ((treesit-dir (expand-file-name "tree-sitter" user-emacs-directory))
+       (directory-exists (file-directory-p treesit-dir)))
+  (if (not directory-exists)
+      (progn
+        (message "Treesitter directory (%s) does not exist. Installing..." treesit-dir)
+        (install-treesit-grammars))
+      (message "Treesitter directory (%s) exists. Skipping install." treesit-dir)))
+
+(require 'treesit)
 ;; 1) try treesit-language-available-p (maybe)
 ;; 2) add more langs: Go
 
