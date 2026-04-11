@@ -15,3 +15,4 @@ eln-cache
 tree-sitter
 bookmarks
 .cache/
+session*

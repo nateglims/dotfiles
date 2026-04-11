@@ -44,13 +44,14 @@ if command -v git > /dev/null
     alias gsc="git show --color --pretty=format:%b"
 end
 
-alias cdg="cdk --profile glimsdal"
-alias cdo="cdk --profile glimsdal-old"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-# Set up mise for runtime management
-mise activate fish | source
-
-# string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-path fish)
+switch (uname)
+case Darwin
+    alias cdg="cdk --profile glimsdal"
+    alias cdo="cdk --profile glimsdal-old"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    # Set up mise for runtime management
+    mise activate fish | source
+end
 
 function vterm_prompt_end;
     vterm_printf '51;A'(whoami)'@'(hostname)':'(pwd)
